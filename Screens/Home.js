@@ -154,11 +154,7 @@ export default function HomePage({ route, navigation }) {
 						</View>
 
 						<View className="flex-row justify-between items-center">
-							<TouchableOpacity
-								onPress={() => {
-									connectWallet;
-								}}
-							>
+							<TouchableOpacity onPress={connectWallet}>
 								<MaterialIcons
 									name="qr-code-scanner"
 									size={24}
