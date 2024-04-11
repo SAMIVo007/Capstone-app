@@ -98,7 +98,6 @@ export default function HomePage({ route, navigation }) {
 		<>
 			<StatusBar style="light" />
 
-			<Wallet>
 				<FadedView>
 					<View className="flex-1">
 						<View className="p-4 pt-12 flex-row justify-between items-center ">
@@ -373,7 +372,6 @@ export default function HomePage({ route, navigation }) {
 						</ScrollView>
 					</View>
 				</FadedView>
-			</Wallet>
 
 			<View
 				className="border border-gray-200 flex-row justify-evenly m-2 bg-white absolute bottom-1 right-1 overflow-hidden left-1"

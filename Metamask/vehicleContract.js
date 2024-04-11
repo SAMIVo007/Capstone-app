@@ -6,7 +6,7 @@ import {
 } from "wagmi";
 import addVehicleABI from "./ABI's/addVehicleABI.json";
 
-export function vehicleContract(
+export async function AddVehicle(
 	vehicleID,
 	phoneNum,
 	buyDate,
@@ -33,13 +33,24 @@ export function vehicleContract(
 
 	const { data, isLoading, isSuccess, write } = useContractWrite(config);
 
+	try {
+		await write?.();
+		if (isSuccess) {
+			console.log(JSON.stringify(data));
+		}
+	} catch (error) {
+		console.log(error);
+	}
+
+  return (isSuccess) ;
+
 	// return (
 	// 	<View style={styles.marginVertical}>
 	// 		{/* <View style={styles.marginVertical}>
-  //       {isLoading && <Text>Loading</Text>}
-  //       {isSuccess && <Text>Name: {contractName?.toString()}</Text>}
-  //       {isError && <Text>Error reading contract</Text>}
-  //     </View> */}
+	//       {isLoading && <Text>Loading</Text>}
+	//       {isSuccess && <Text>Name: {contractName?.toString()}</Text>}
+	//       {isError && <Text>Error reading contract</Text>}
+	//     </View> */}
 
 	// 		<Pressable style={styles.button} onPress={() => write?.()}>
 	// 			<Text style={styles.centerText}>Mint</Text>
@@ -58,6 +69,7 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 	},
 	marginVertical: {
+		flex: 1,
 		marginVertical: 10,
 		display: "flex",
 		alignItems: "center",

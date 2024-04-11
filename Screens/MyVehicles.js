@@ -9,6 +9,7 @@ import {
 	KeyboardAvoidingView,
 	Platform,
 	ScrollView,
+	Alert
 } from "react-native";
 import PrimaryButton from "../Components/primaryButton";
 import Colors from "../Components/Colors";
@@ -18,9 +19,18 @@ import { Formik } from "formik";
 import { loginUser, fetchUserDetails } from "../util/Api";
 // import { addVehicle } from "../util/vehicleApi";
 import { getSessionToken } from "../util/tokenStore";
-import { addVehicleToContract } from "../Metamask/vehicleContract";
-import { useAddVehicleToContract } from "../Metamask/vehicleContract";
+// import { AddVehicle } from "../Metamask/vehicleContract";
 
+///////////////////
+
+import {
+	useContractRead,
+	useContractWrite,
+	usePrepareContractWrite,
+} from "wagmi";
+import addVehicleABI from "../Metamask/ABI's/addVehicleABI.json";
+
+////////////////////
 
 export default function MyVehicles({ navigation }) {
 	// const handleaddVehicle = async (values) => {
@@ -42,10 +52,20 @@ export default function MyVehicles({ navigation }) {
 	// 	}
 	// };
 
-	const addVehicleToContract = useAddVehicleToContract();
+	const [vehicleID, setVehicleID] = useState("");
+	const [phoneNum, setPhoneNum] = useState(0);
+	const [buyDate, setBuyDate] = useState("");
+	const [model, setModel] = useState("");
+	const [plateNum, setPlateNum] = useState("");
+	const [insuranceValidity, setInsuranceValidity] = useState("");
+	const [pollutionValidity, setPollutionValidity] = useState("");
 
-	const handleAddVehicle = async (values) => {
-		const {
+	// Writing to the Contract
+	const { config } = usePrepareContractWrite({
+		address: "0x6E92334551801B45f4be6Af67933c51c1f902206",
+		abi: addVehicleABI,
+		functionName: "addVehicle",
+		args: [
 			vehicleID,
 			phoneNum,
 			buyDate,
@@ -53,34 +73,17 @@ export default function MyVehicles({ navigation }) {
 			plateNum,
 			insuranceValidity,
 			pollutionValidity,
-		} = values;
+		],
+	});
 
-		try {
-			const { isLoading, isSuccess, data, transactionResult } =
-				await addVehicleToContract(
-					vehicleID,
-					phoneNum,
-					buyDate,
-					model,
-					plateNum,
-					insuranceValidity,
-					pollutionValidity
-				);
-
-			if (isSuccess) {
-				console.log("Vehicle added successfully", transactionResult);
-			}
-		} catch (error) {
-			console.log(error);
-		}
-	};
+	const { data, isLoading, isSuccess, write } = useContractWrite(config);
 
 	return (
 		<View className="flex-1">
 			<Formik
 				initialValues={{
 					vehicleID: "",
-					phoneNum: 0,
+					phoneNum: "",
 					buyDate: "",
 					model: "",
 					plateNum: "",
@@ -88,7 +91,55 @@ export default function MyVehicles({ navigation }) {
 					pollutionValidity: "",
 				}}
 				onSubmit={(values) => {
-					handleAddVehicle(values);
+					// navigation.navigate("Contract");
+					console.log(values);
+					const {
+						vehicleID,
+						phoneNum,
+						buyDate,
+						model,
+						plateNum,
+						insuranceValidity,
+						pollutionValidity,
+					} = values;
+
+					setVehicleID(vehicleID);
+					setPhoneNum(parseInt(phoneNum));
+					setBuyDate(buyDate);
+					setModel(model);
+					setPlateNum(plateNum);
+					setInsuranceValidity(insuranceValidity);
+					setPollutionValidity(pollutionValidity);
+
+					console.log(
+						"Vehicle ID: ",
+						vehicleID,
+						"  Phone Number: ",
+						phoneNum,
+						"  Buy Date: ",
+						buyDate,
+						"  Model: ",
+						model,
+						"  Plate Number: ",
+						plateNum,
+						"  Insurance Validity: ",
+						insuranceValidity,
+						"  Pollution Validity: ",
+						pollutionValidity
+					);
+
+					try {
+						write?.();
+						if (isSuccess) {
+							console.log("Vehicle added succesfully", JSON.stringify(data));
+							console.log("isSuccess: ", isSuccess);	
+							Alert.alert("Vehicle added succesfully.", [
+								{ text: "OK", style: "cancel" },
+							]);
+						}
+					} catch (error) {
+						console.log(error);
+					}
 				}}
 			>
 				{({ handleChange, handleSubmit, values, touched, errors }) => (
@@ -110,6 +161,7 @@ export default function MyVehicles({ navigation }) {
 									onChangeText={handleChange("vehicleID")}
 									value={values.vehicleID}
 								/>
+
 								<TextInput
 									keyboardType="numeric"
 									className=" border-b mb-4 border-gray-200 py-2 px-2 text-base text-gray-700"

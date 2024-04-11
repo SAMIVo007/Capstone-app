@@ -21,9 +21,6 @@ import vehicleContract from "./Metamask/vehicleContract";
 import Colors from "./Components/Colors";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import "node-libs-expo/globals";
-import "react-native-url-polyfill/auto";
-import "react-native-get-random-values";
 import Wallet from "./Metamask/WalleConnect";
 
 export default function App() {
@@ -33,7 +30,7 @@ export default function App() {
 		<Wallet>
 			<NavigationContainer>
 				<Stack.Navigator
-					initialRouteName="Home"
+					initialRouteName="LoginSplash"
 					screenOptions={{ headerShown: false }}
 				>
 					<Stack.Screen name="LoginSplash" component={LoginSplash} />
@@ -44,7 +41,7 @@ export default function App() {
 					<Stack.Screen name="MenuScreen" component={MenuScreen} />
 					<Stack.Screen name="MyVehicles" component={MyVehicles} />
 					<Stack.Screen name="Traffic" component={Traffic} />
-					<Stack.Screen name="Contract" component={vehicleContract} />
+					{/* <Stack.Screen name="Contract" component={vehicleContract} /> */}
 				</Stack.Navigator>
 			</NavigationContainer>
 		</Wallet>
