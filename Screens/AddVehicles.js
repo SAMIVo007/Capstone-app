@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	View,
 	Text,
@@ -9,7 +9,7 @@ import {
 	KeyboardAvoidingView,
 	Platform,
 	ScrollView,
-	Alert
+	Alert,
 } from "react-native";
 import PrimaryButton from "../Components/primaryButton";
 import Colors from "../Components/Colors";
@@ -32,7 +32,7 @@ import addVehicleABI from "../Metamask/ABI's/addVehicleABI.json";
 
 ////////////////////
 
-export default function MyVehicles({ navigation }) {
+export default function AddVehicles({ navigation }) {
 	// const handleaddVehicle = async (values) => {
 	// 	try {
 	// 		const token = getSessionToken();
@@ -67,7 +67,7 @@ export default function MyVehicles({ navigation }) {
 		functionName: "addVehicle",
 		args: [
 			vehicleID,
-			phoneNum,
+			parseInt(phoneNum),
 			buyDate,
 			model,
 			plateNum,
@@ -77,6 +77,54 @@ export default function MyVehicles({ navigation }) {
 	});
 
 	const { data, isLoading, isSuccess, write } = useContractWrite(config);
+
+	useEffect(() => {
+		if (isLoading) {
+			console.log("Loading...");
+		} else if (isSuccess) {
+			console.log("Vehicle added successfully", JSON.stringify(data));
+			Alert.alert("Vehicle added successfully.", [
+				{ text: "OK", style: "cancel" },
+			]);
+		}
+	}, [isLoading, isSuccess, data]);
+
+	const handleAddVehicle = async (values) => {
+		const {
+			vehicleID,
+			phoneNum,
+			buyDate,
+			model,
+			plateNum,
+			insuranceValidity,
+			pollutionValidity,
+		} = values;
+
+		setVehicleID(vehicleID);
+		setPhoneNum(phoneNum);
+		setBuyDate(buyDate);
+		setModel(model);
+		setPlateNum(plateNum);
+		setInsuranceValidity(insuranceValidity);
+		setPollutionValidity(pollutionValidity);
+
+		console.log(
+			"Vehicle ID: ",
+			vehicleID,
+			"  Phone Number: ",
+			phoneNum,
+			"  Buy Date: ",
+			buyDate,
+			"  Model: ",
+			model,
+			"  Plate Number: ",
+			plateNum,
+			"  Insurance Validity: ",
+			insuranceValidity,
+			"  Pollution Validity: ",
+			pollutionValidity
+		);
+	};
 
 	return (
 		<View className="flex-1">
@@ -90,53 +138,13 @@ export default function MyVehicles({ navigation }) {
 					insuranceValidity: "",
 					pollutionValidity: "",
 				}}
-				onSubmit={(values) => {
+				onSubmit={async (values) => {
 					// navigation.navigate("Contract");
 					console.log(values);
-					const {
-						vehicleID,
-						phoneNum,
-						buyDate,
-						model,
-						plateNum,
-						insuranceValidity,
-						pollutionValidity,
-					} = values;
-
-					setVehicleID(vehicleID);
-					setPhoneNum(parseInt(phoneNum));
-					setBuyDate(buyDate);
-					setModel(model);
-					setPlateNum(plateNum);
-					setInsuranceValidity(insuranceValidity);
-					setPollutionValidity(pollutionValidity);
-
-					console.log(
-						"Vehicle ID: ",
-						vehicleID,
-						"  Phone Number: ",
-						phoneNum,
-						"  Buy Date: ",
-						buyDate,
-						"  Model: ",
-						model,
-						"  Plate Number: ",
-						plateNum,
-						"  Insurance Validity: ",
-						insuranceValidity,
-						"  Pollution Validity: ",
-						pollutionValidity
-					);
 
 					try {
+						await handleAddVehicle(values);
 						write?.();
-						if (isSuccess) {
-							console.log("Vehicle added succesfully", JSON.stringify(data));
-							console.log("isSuccess: ", isSuccess);	
-							Alert.alert("Vehicle added succesfully.", [
-								{ text: "OK", style: "cancel" },
-							]);
-						}
 					} catch (error) {
 						console.log(error);
 					}
@@ -161,7 +169,6 @@ export default function MyVehicles({ navigation }) {
 									onChangeText={handleChange("vehicleID")}
 									value={values.vehicleID}
 								/>
-
 								<TextInput
 									keyboardType="numeric"
 									className=" border-b mb-4 border-gray-200 py-2 px-2 text-base text-gray-700"
