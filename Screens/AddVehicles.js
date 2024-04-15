@@ -62,7 +62,7 @@ export default function AddVehicles({ navigation }) {
 
 	// Writing to the Contract
 	const { config } = usePrepareContractWrite({
-		address: "0x6E92334551801B45f4be6Af67933c51c1f902206",
+		address: "0x7a134d5e67e388d7dbdb62491c1c7e1b6374548a",
 		abi: addVehicleABI,
 		functionName: "addVehicle",
 		args: [
@@ -89,43 +89,6 @@ export default function AddVehicles({ navigation }) {
 		}
 	}, [isLoading, isSuccess, data]);
 
-	const handleAddVehicle = async (values) => {
-		const {
-			vehicleID,
-			phoneNum,
-			buyDate,
-			model,
-			plateNum,
-			insuranceValidity,
-			pollutionValidity,
-		} = values;
-
-		setVehicleID(vehicleID);
-		setPhoneNum(phoneNum);
-		setBuyDate(buyDate);
-		setModel(model);
-		setPlateNum(plateNum);
-		setInsuranceValidity(insuranceValidity);
-		setPollutionValidity(pollutionValidity);
-
-		console.log(
-			"Vehicle ID: ",
-			vehicleID,
-			"  Phone Number: ",
-			phoneNum,
-			"  Buy Date: ",
-			buyDate,
-			"  Model: ",
-			model,
-			"  Plate Number: ",
-			plateNum,
-			"  Insurance Validity: ",
-			insuranceValidity,
-			"  Pollution Validity: ",
-			pollutionValidity
-		);
-	};
-
 	return (
 		<View className="flex-1">
 			<Formik
@@ -142,8 +105,42 @@ export default function AddVehicles({ navigation }) {
 					// navigation.navigate("Contract");
 					console.log(values);
 
+					const {
+						vehicleID,
+						phoneNum,
+						buyDate,
+						model,
+						plateNum,
+						insuranceValidity,
+						pollutionValidity,
+					} = values;
+
+					setVehicleID(vehicleID);
+					setPhoneNum(phoneNum);
+					setBuyDate(buyDate);
+					setModel(model);
+					setPlateNum(plateNum);
+					setInsuranceValidity(insuranceValidity);
+					setPollutionValidity(pollutionValidity);
+
+					console.log(
+						"Vehicle ID: ",
+						vehicleID,
+						"  Phone Number: ",
+						phoneNum,
+						"  Buy Date: ",
+						buyDate,
+						"  Model: ",
+						model,
+						"  Plate Number: ",
+						plateNum,
+						"  Insurance Validity: ",
+						insuranceValidity,
+						"  Pollution Validity: ",
+						pollutionValidity
+					);
+
 					try {
-						await handleAddVehicle(values);
 						write?.();
 					} catch (error) {
 						console.log(error);

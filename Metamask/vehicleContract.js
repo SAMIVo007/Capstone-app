@@ -6,7 +6,7 @@ import {
 } from "wagmi";
 import addVehicleABI from "./ABI's/addVehicleABI.json";
 
-export async function AddVehicle(
+function AddVehicle(
 	vehicleID,
 	phoneNum,
 	buyDate,
@@ -17,12 +17,12 @@ export async function AddVehicle(
 ) {
 	// Writing to the Contract
 	const { config } = usePrepareContractWrite({
-		address: "0x6E92334551801B45f4be6Af67933c51c1f902206",
+		address: "0x7a134d5e67e388d7dbdb62491c1c7e1b6374548a",
 		abi: addVehicleABI,
 		functionName: "addVehicle",
 		args: [
 			vehicleID,
-			phoneNum,
+			parseInt(phoneNum),
 			buyDate,
 			model,
 			plateNum,
@@ -33,8 +33,19 @@ export async function AddVehicle(
 
 	const { data, isLoading, isSuccess, write } = useContractWrite(config);
 
+	useEffect(() => {
+		if (isLoading) {
+			console.log("Loading...");
+		} else if (isSuccess) {
+			console.log("Vehicle added successfully", JSON.stringify(data));
+			Alert.alert("Vehicle added successfully.", [
+				{ text: "OK", style: "cancel" },
+			]);
+		}
+	}, [isLoading, isSuccess, data]);
+
 	try {
-		await write?.();
+		write?.();
 		if (isSuccess) {
 			console.log(JSON.stringify(data));
 		}
@@ -42,7 +53,7 @@ export async function AddVehicle(
 		console.log(error);
 	}
 
-  return (isSuccess) ;
+	return isSuccess;
 
 	// return (
 	// 	<View style={styles.marginVertical}>
