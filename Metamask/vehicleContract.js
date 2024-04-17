@@ -1,20 +1,42 @@
 import { Text, View, StyleSheet, Pressable } from "react-native";
+import React, { useEffect } from "react";
+import PrimaryButton from "../Components/primaryButton";
 import {
 	useContractRead,
 	useContractWrite,
 	usePrepareContractWrite,
 } from "wagmi";
 import addVehicleABI from "./ABI's/addVehicleABI.json";
+import Web3 from "./WalleConnect";
 
-function AddVehicle(
-	vehicleID,
-	phoneNum,
-	buyDate,
-	model,
-	plateNum,
-	insuranceValidity,
-	pollutionValidity
-) {
+export default function AddVehicle({ values }) {
+	const {
+		vehicleID,
+		phoneNum,
+		buyDate,
+		model,
+		plateNum,
+		insuranceValidity,
+		pollutionValidity,
+	} = values;
+
+	console.log(
+		"VID:",
+		vehicleID,
+		" PhNo:",
+		phoneNum,
+		" Buy Date:",
+		buyDate,
+		" Model:",
+		model,
+		" Plate:",
+		plateNum,
+		" insurance:",
+		insuranceValidity,
+		" Pollution:",
+		pollutionValidity
+	);
+
 	// Writing to the Contract
 	const { config } = usePrepareContractWrite({
 		address: "0x7a134d5e67e388d7dbdb62491c1c7e1b6374548a",
@@ -33,46 +55,30 @@ function AddVehicle(
 
 	const { data, isLoading, isSuccess, write } = useContractWrite(config);
 
-	useEffect(() => {
-		if (isLoading) {
-			console.log("Loading...");
-		} else if (isSuccess) {
-			console.log("Vehicle added successfully", JSON.stringify(data));
-			Alert.alert("Vehicle added successfully.", [
-				{ text: "OK", style: "cancel" },
-			]);
-		}
-	}, [isLoading, isSuccess, data]);
+	return (
+		<Web3>
+			<PrimaryButton
+				onPress={() => {
+					try {
+						write?.();
 
-	try {
-		write?.();
-		if (isSuccess) {
-			console.log(JSON.stringify(data));
-		}
-	} catch (error) {
-		console.log(error);
-	}
-
-	return isSuccess;
-
-	// return (
-	// 	<View style={styles.marginVertical}>
-	// 		{/* <View style={styles.marginVertical}>
-	//       {isLoading && <Text>Loading</Text>}
-	//       {isSuccess && <Text>Name: {contractName?.toString()}</Text>}
-	//       {isError && <Text>Error reading contract</Text>}
-	//     </View> */}
-
-	// 		<Pressable style={styles.button} onPress={() => write?.()}>
-	// 			<Text style={styles.centerText}>Mint</Text>
-	// 		</Pressable>
-	// 		{isLoading && <Text>Check Wallet</Text>}
-	// 		<Text style={{ textAlign: "center", marginVertical: 10 }}>Transaction:</Text>
-	// 		{isSuccess && (
-	// 			<Text style={{ textAlign: "center" }}>{JSON.stringify(data)}</Text>
-	// 		)}
-	// 	</View>
-	// );
+						if (isLoading) {
+							console.log("Loading...");
+						} else if (isSuccess) {
+							console.log("Vehicle added successfully", JSON.stringify(data));
+							Alert.alert("Vehicle added successfully.", [
+								{ text: "OK", style: "cancel" },
+							]);
+						}
+					} catch (error) {
+						console.log(error);
+					}
+				}}
+			>
+				Add
+			</PrimaryButton>
+		</Web3>
+	);
 }
 
 const styles = StyleSheet.create({

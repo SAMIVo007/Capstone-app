@@ -27,7 +27,7 @@ export default function App() {
 	const Stack = createNativeStackNavigator();
 
 	return (
-		<Wallet>
+		// <Wallet>
 			<NavigationContainer>
 				<Stack.Navigator
 					initialRouteName="Home"
@@ -44,6 +44,6 @@ export default function App() {
 					{/* <Stack.Screen name="Contract" component={vehicleContract} /> */}
 				</Stack.Navigator>
 			</NavigationContainer>
-		</Wallet>
+		// </Wallet>
 	);
 }

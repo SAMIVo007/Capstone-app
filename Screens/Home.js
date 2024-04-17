@@ -26,8 +26,9 @@ import Carousel from "react-native-reanimated-carousel";
 import { logoutUser, fetchUserDetails, isSessionValid } from "../util/Api";
 import FadedView from "../Components/FadeView";
 import { getSessionToken } from "../util/tokenStore";
-import Wallet from "../Metamask/WalleConnect";
 import { useWeb3Modal } from "@web3modal/wagmi-react-native";
+import { W3mButton } from "@web3modal/wagmi-react-native";
+import Web3 from "../Metamask/WalleConnect";
 
 export default function HomePage({ route, navigation }) {
 	const [myuser, setmyuser] = useState("");
@@ -95,7 +96,7 @@ export default function HomePage({ route, navigation }) {
 	];
 
 	return (
-		<>
+		<Web3>
 			<StatusBar style="light" />
 
 			<FadedView>
@@ -412,6 +413,6 @@ export default function HomePage({ route, navigation }) {
 					<Text className="text-[#454545] text-xs">Menu</Text>
 				</TouchableOpacity>
 			</View>
-		</>
+		</Web3>
 	);
 }
