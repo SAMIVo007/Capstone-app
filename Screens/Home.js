@@ -408,7 +408,12 @@ export default function HomePage({ route, navigation }) {
 					<Text className="text-[#454545] text-xs">Services</Text>
 				</TouchableOpacity>
 
-				<TouchableOpacity className=" p-2 px-6 items-center">
+				<TouchableOpacity
+					className=" p-2 px-6 items-center"
+					onPress={() => {
+						navigation.navigate("MenuScreen");
+					}}
+				>
 					<Ionicons name="person" size={26} color={"#454545"} />
 					<Text className="text-[#454545] text-xs">Menu</Text>
 				</TouchableOpacity>

@@ -21,15 +21,14 @@ import {
 } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
-// import { Carousel, Card, Switch } from "react-native-ui-lib";
+import { Carousel, Card, Switch } from "react-native-ui-lib";
 import Colors from "../Components/Colors";
 import { logoutUser, fetchUserDetails, isSessionValid } from "../util/Api";
 import FadedView from "../Components/FadeView";
 import Traffic from "./Traffic";
-import { BlurView } from "expo-blur";
 import PrimaryButton from "../Components/primaryButton";
 
-export default function HomePage({ navigateTo, token }) {
+export default function MenuScreen({ navigateTo, token }) {
 	const [Notifications, setNotifications] = useState(true);
 	const items = [1, 2, 3, 4];
 
@@ -68,7 +67,7 @@ export default function HomePage({ navigateTo, token }) {
 				opacity={0.85}
 			>
 				<View className="flex-1">
-					<BlurView intensity={90}>
+					<View intensity={90}>
 						<View className="p-4 pt-12 flex-row justify-between items-center ">
 							<View className="flex-row justify-between items-center">
 								{/* <Image
@@ -126,11 +125,11 @@ export default function HomePage({ navigateTo, token }) {
 								</View>
 							</View>
 						</TouchableOpacity>
-					</BlurView>
+					</View>
 
 					{/* ///////////////////////////////////////////////////////////////////////////////////////////////////////// */}
 
-					<BlurView
+					<View
 						intensity={88}
 						tint="light"
 						style={{
@@ -150,7 +149,7 @@ export default function HomePage({ navigateTo, token }) {
 						>
 							<TouchableOpacity className="flex-row justify-between items-center">
 								<View className="flex-row items-center">
-									<BlurView
+									<View
 										intensity={88}
 										tint="light"
 										style={{
@@ -167,7 +166,7 @@ export default function HomePage({ navigateTo, token }) {
 										}}
 									>
 										<Feather name="activity" size={24} color={Colors.primaryBlue} />
-									</BlurView>
+									</View>
 									<Text className="text-base font-medium mx-2 p-4 ">My Activity</Text>
 								</View>
 								<View>
@@ -177,7 +176,7 @@ export default function HomePage({ navigateTo, token }) {
 
 							<TouchableOpacity onPress={()=> navigateTo(6)} className="flex-row justify-between items-center">
 								<View className="flex-row items-center">
-									<BlurView
+									<View
 										intensity={88}
 										tint="light"
 										style={{
@@ -198,7 +197,7 @@ export default function HomePage({ navigateTo, token }) {
 											size={24}
 											color={Colors.primaryBlue}
 										/>
-									</BlurView>
+									</View>
 									<Text className="text-base font-medium mx-2 p-4 ">My Vehicles</Text>
 								</View>
 								<View>
@@ -208,7 +207,7 @@ export default function HomePage({ navigateTo, token }) {
 
 							<TouchableOpacity className="flex-row justify-between items-center">
 								<View className="flex-row items-center">
-									<BlurView
+									<View
 										intensity={88}
 										tint="light"
 										style={{
@@ -225,7 +224,7 @@ export default function HomePage({ navigateTo, token }) {
 										}}
 									>
 										<Ionicons name="language" size={24} color={Colors.primaryBlue} />
-									</BlurView>
+									</View>
 									<Text className="text-base font-medium mx-2 p-4 ">Language</Text>
 								</View>
 								<View>
@@ -240,7 +239,7 @@ export default function HomePage({ navigateTo, token }) {
 								}}
 							>
 								<View className="flex-row items-center">
-									<BlurView
+									<View
 										intensity={88}
 										tint="light"
 										style={{
@@ -257,7 +256,7 @@ export default function HomePage({ navigateTo, token }) {
 										}}
 									>
 										<Feather name="bell" size={24} color={Colors.primaryBlue} />
-									</BlurView>
+									</View>
 									<Text className="text-base font-medium mx-2 p-4 ">Notifications</Text>
 								</View>
 								<View className="mx-1">
@@ -273,7 +272,7 @@ export default function HomePage({ navigateTo, token }) {
 
 							<TouchableOpacity className="flex-row justify-between items-center">
 								<View className="flex-row items-center">
-									<BlurView
+									<View
 										intensity={88}
 										tint="light"
 										style={{
@@ -290,7 +289,7 @@ export default function HomePage({ navigateTo, token }) {
 										}}
 									>
 										<Feather name="unlock" size={24} color={Colors.primaryBlue} />
-									</BlurView>
+									</View>
 									<Text className="text-base font-medium mx-2 p-4 ">
 										Change Password
 									</Text>
@@ -302,7 +301,7 @@ export default function HomePage({ navigateTo, token }) {
 
 							<TouchableOpacity className="flex-row justify-between items-center">
 								<View className="flex-row items-center">
-									<BlurView
+									<View
 										intensity={88}
 										tint="light"
 										style={{
@@ -319,7 +318,7 @@ export default function HomePage({ navigateTo, token }) {
 										}}
 									>
 										<Feather name="help-circle" size={24} color={Colors.primaryBlue} />
-									</BlurView>
+									</View>
 									<Text className="text-base font-medium mx-2 p-4 ">Help</Text>
 								</View>
 								<View>
@@ -329,7 +328,7 @@ export default function HomePage({ navigateTo, token }) {
 
 							<TouchableOpacity className="flex-row justify-between items-center mb-3">
 								<View className="flex-row items-center">
-									<BlurView
+									<View
 										intensity={88}
 										tint="light"
 										style={{
@@ -350,7 +349,7 @@ export default function HomePage({ navigateTo, token }) {
 											size={24}
 											color={Colors.primaryBlue}
 										/>
-									</BlurView>
+									</View>
 									<Text className="text-base font-medium mx-2 p-4 ">Report</Text>
 								</View>
 								<View>
@@ -369,7 +368,7 @@ export default function HomePage({ navigateTo, token }) {
 								</PrimaryButton>
 							</View>
 						</ScrollView>
-					</BlurView>
+					</View>
 				</View>
 			</ImageBackground>
 			<StatusBar style="dark" />

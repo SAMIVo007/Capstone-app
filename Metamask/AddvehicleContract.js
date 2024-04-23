@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Pressable } from "react-native";
+import { Text, View, StyleSheet, Pressable, Alert } from "react-native";
 import React, { useEffect } from "react";
 import PrimaryButton from "../Components/primaryButton";
 import {
@@ -12,10 +12,11 @@ import Web3 from "./WalleConnect";
 export default function AddVehicle({ values }) {
 	const {
 		vehicleID,
-		phoneNum,
-		buyDate,
+		year,
+		make,
 		model,
 		plateNum,
+		color,
 		insuranceValidity,
 		pollutionValidity,
 	} = values;
@@ -23,31 +24,34 @@ export default function AddVehicle({ values }) {
 	console.log(
 		"VID:",
 		vehicleID,
-		" PhNo:",
-		phoneNum,
-		" Buy Date:",
-		buyDate,
-		" Model:",
+		", Year:",
+		year,
+		", Make:",
+		make,
+		", Model:",
 		model,
-		" Plate:",
+		", Plate:",
 		plateNum,
-		" insurance:",
+		", Color:",
+		color,
+		", insurance:",
 		insuranceValidity,
-		" Pollution:",
+		", Pollution:",
 		pollutionValidity
 	);
 
 	// Writing to the Contract
 	const { config } = usePrepareContractWrite({
-		address: "0x7a134d5e67e388d7dbdb62491c1c7e1b6374548a",
+		address: "0xe1eeeff54b4ebe113c383315ecd49b494cf32c46",
 		abi: addVehicleABI,
 		functionName: "addVehicle",
 		args: [
 			vehicleID,
-			parseInt(phoneNum),
-			buyDate,
+			parseInt(year),
+			make,
 			model,
 			plateNum,
+			color,
 			insuranceValidity,
 			pollutionValidity,
 		],
@@ -55,21 +59,25 @@ export default function AddVehicle({ values }) {
 
 	const { data, isLoading, isSuccess, write } = useContractWrite(config);
 
+	useEffect(() => {
+		if (isLoading) {
+			console.log("Loading...");
+		}
+		if (isSuccess) {
+			console.log("Vehicle added successfully", JSON.stringify(data));
+			Alert.alert("Vehicle added successfully.", [
+				{ text: "OK", style: "cancel" },
+			]);
+
+		}
+	}, [isLoading, isSuccess]);
+
 	return (
 		<Web3>
 			<PrimaryButton
 				onPress={() => {
 					try {
 						write?.();
-
-						if (isLoading) {
-							console.log("Loading...");
-						} else if (isSuccess) {
-							console.log("Vehicle added successfully", JSON.stringify(data));
-							Alert.alert("Vehicle added successfully.", [
-								{ text: "OK", style: "cancel" },
-							]);
-						}
 					} catch (error) {
 						console.log(error);
 					}
@@ -81,26 +89,3 @@ export default function AddVehicle({ values }) {
 	);
 }
 
-const styles = StyleSheet.create({
-	heading: {
-		fontSize: 20,
-	},
-	marginVertical: {
-		flex: 1,
-		marginVertical: 10,
-		display: "flex",
-		alignItems: "center",
-		justifyContent: "center",
-	},
-	centerText: {
-		fontSize: 16,
-		textAlign: "center",
-		color: "#fff",
-	},
-	button: {
-		backgroundColor: "#57B36A",
-		padding: 10,
-		width: 140,
-		borderRadius: 32,
-	},
-});

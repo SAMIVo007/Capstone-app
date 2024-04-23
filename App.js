@@ -17,17 +17,18 @@ import Services from "./Screens/Services";
 import Report from "./Screens/Report";
 import Traffic from "./Screens/Traffic";
 import AddVehicles from "./Screens/AddVehicles";
-import vehicleContract from "./Metamask/vehicleContract";
+import vehicleContract from "./Metamask/AddvehicleContract";
 import Colors from "./Components/Colors";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Wallet from "./Metamask/WalleConnect";
+import Web3 from "./Metamask/WalleConnect";
+
 
 export default function App() {
 	const Stack = createNativeStackNavigator();
 
 	return (
-		// <Wallet>
+		<Web3>
 			<NavigationContainer>
 				<Stack.Navigator
 					initialRouteName="Home"
@@ -44,6 +45,6 @@ export default function App() {
 					{/* <Stack.Screen name="Contract" component={vehicleContract} /> */}
 				</Stack.Navigator>
 			</NavigationContainer>
-		// </Wallet>
+		</Web3>
 	);
 }

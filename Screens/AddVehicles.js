@@ -19,7 +19,7 @@ import { Formik } from "formik";
 import { loginUser, fetchUserDetails } from "../util/Api";
 // import { addVehicle } from "../util/vehicleApi";
 import { getSessionToken } from "../util/tokenStore";
-import AddVehicle from "../Metamask/vehicleContract";
+import AddVehicle from "../Metamask/AddvehicleContract";
 
 ///////////////////
 
@@ -70,10 +70,11 @@ export default function AddVehicles({ navigation }) {
 				<Formik
 					initialValues={{
 						vehicleID: "",
-						phoneNum: 1,
-						buyDate: "",
+						year: 1,
+						make: "",
 						model: "",
 						plateNum: "",
+						color: "",
 						insuranceValidity: "",
 						pollutionValidity: "",
 					}}
@@ -104,15 +105,15 @@ export default function AddVehicles({ navigation }) {
 									<TextInput
 										keyboardType="numeric"
 										className=" border-b mb-4 border-gray-200 py-2 px-2 text-base text-gray-700"
-										placeholder="Phone Number"
-										onChangeText={handleChange("phoneNum")}
-										value={values.phoneNum.toString()}
+										placeholder="Year"
+										onChangeText={handleChange("year")}
+										value={values.year.toString()}
 									/>
 									<TextInput
 										className=" border-b mb-4 border-gray-200 py-2 px-2 text-base text-gray-700"
-										placeholder="Buy Date"
-										onChangeText={handleChange("buyDate")}
-										value={values.buyDate}
+										placeholder="Make"
+										onChangeText={handleChange("make")}
+										value={values.make}
 									/>
 									<TextInput
 										className=" border-b mb-4 border-gray-200 py-2 px-2 text-base text-gray-700"
@@ -130,6 +131,13 @@ export default function AddVehicles({ navigation }) {
 
 									<TextInput
 										className=" border-b mb-4 border-gray-200 py-2 px-2 text-base text-gray-700"
+										placeholder="Color"
+										onChangeText={handleChange("color")}
+										value={values.color}
+									/>
+
+									<TextInput
+										className=" border-b mb-4 border-gray-200 py-2 px-2 text-base text-gray-700"
 										placeholder="Enter Insurance Validity"
 										onChangeText={handleChange("insuranceValidity")}
 										value={values.insuranceValidity}
@@ -143,8 +151,7 @@ export default function AddVehicles({ navigation }) {
 									/>
 
 									<View className=" my-2">
-										
-										<AddVehicle values={values}/>
+										<AddVehicle values={values} />
 									</View>
 								</View>
 							</View>

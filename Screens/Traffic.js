@@ -27,6 +27,7 @@ import FadedView from "../Components/FadeView";
 import { BlurView } from "expo-blur";
 import { getUserVehicles } from "../util/vehicleApi";
 import { getSessionToken } from "../util/tokenStore";
+import Web3 from "../Metamask/WalleConnect";
 
 export default function Traffic({ navigation }) {
 	const [vehicles, setVehicles] = useState([]);
@@ -45,8 +46,8 @@ export default function Traffic({ navigation }) {
 		const checkSessionValidity = async () => {
 			const sessionToken = await getSessionToken();
 			try {
-				// const checkLoginSession = isSessionValid(sessionToken);
-				if (sessionToken) {
+				const checkLoginSession = isSessionValid(sessionToken);
+				if (checkLoginSession) {
 					console.log("get all vehicles : ", sessionToken);
 					getallvehicles();
 				} else {
@@ -64,7 +65,7 @@ export default function Traffic({ navigation }) {
 	
 
 	return (
-		<>
+		<Web3>
 			<View
 				style={{
 					flex: 1,
@@ -278,6 +279,6 @@ export default function Traffic({ navigation }) {
 			</View>
 
 			<StatusBar style="dark" />
-		</>
+		</Web3>
 	);
 }
