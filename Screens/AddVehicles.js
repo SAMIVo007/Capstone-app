@@ -34,35 +34,6 @@ import Web3 from "../Metamask/WalleConnect";
 ////////////////////
 
 export default function AddVehicles({ navigation }) {
-	// const handleaddVehicle = async (values) => {
-	// 	try {
-	// 		const token = getSessionToken();
-	// 		console.log("IN ADD vehicle 1");
-	// 		const thisuser = await fetchUserDetails(token);
-	// 		console.log("IN ADD vehicle 2", thisuser);
-	// 		const userId = thisuser.data.id;
-	// 		values.ownerId = userId;
-	// 		const res = await addVehicle(values);
-	// 		if (res.status === 200) {
-	// 			navigateTo(7);
-	// 		} else {
-	// 			alert("Error in adding vehicle");
-	// 		}
-	// 	} catch (error) {
-	// 		console.log(error);
-	// 	}
-	// };
-
-	// useEffect(() => {
-	// 	if (isLoading) {
-	// 		console.log("Loading...");
-	// 	} else if (isSuccess) {
-	// 		console.log("Vehicle added successfully", JSON.stringify(data));
-	// 		Alert.alert("Vehicle added successfully.", [
-	// 			{ text: "OK", style: "cancel" },
-	// 		]);
-	// 	}
-	// }, [isLoading, isSuccess, data]);
 
 	return (
 		<Web3>

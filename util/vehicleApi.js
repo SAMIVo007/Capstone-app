@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_URL = "http://192.168.18.179:3000"; //home
 // const API_URL = "http://172.16.92.66:3000"; //college
-// const API_URL = "http://192.168.38.45:3000/auth"; //hotspot
+// const API_URL = "http://172.20.10.3:3000/auth"; //csed
 
 
 export const getUserVehicles = async (userId) => {
