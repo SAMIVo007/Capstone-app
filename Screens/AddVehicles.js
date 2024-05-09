@@ -19,19 +19,9 @@ import { Formik } from "formik";
 import { loginUser, fetchUserDetails } from "../util/Api";
 // import { addVehicle } from "../util/vehicleApi";
 import { getSessionToken } from "../util/tokenStore";
-import AddVehicle from "../Metamask/AddvehicleContract";
-
-///////////////////
-
-import {
-	useContractRead,
-	useContractWrite,
-	usePrepareContractWrite,
-} from "wagmi";
-import addVehicleABI from "../Metamask/ABI's/addVehicleABI.json";
+import AddvehicleContract from "../Metamask/AddvehicleContract";
 import Web3 from "../Metamask/WalleConnect";
 
-////////////////////
 
 export default function AddVehicles({ navigation }) {
 
@@ -51,7 +41,7 @@ export default function AddVehicles({ navigation }) {
 					}}
 					onSubmit={(values) => {
 						// navigation.navigate("Contract");
-						console.log(values);
+						// console.log(values);
 					}}
 				>
 					{({ handleChange, handleSubmit, values, touched, errors }) => (
@@ -122,7 +112,7 @@ export default function AddVehicles({ navigation }) {
 									/>
 
 									<View className=" my-2">
-										<AddVehicle values={values} />
+										<AddvehicleContract values={values} />
 									</View>
 								</View>
 							</View>

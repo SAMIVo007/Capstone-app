@@ -2,10 +2,11 @@ import axios from "axios";
 
 const API_URL = "http://192.168.18.179:3000"; //home
 // const API_URL = "http://172.16.92.66:3000"; //college
-// const API_URL = "http://172.20.10.3:3000/auth"; //csed
+// const API_URL = "http://192.168.226.45:3000/auth"; //
 
 
 export const getUserVehicles = async (userId) => {
+	console.log("in get user vehicles api");
 	try {
 		const response = await axios.get(`${API_URL}/vehicle/view/all/${userId}`);
 		return response.data;
@@ -28,7 +29,7 @@ export const addVehicle = async (vehicle) => {
 	try {
 		const response = await axios.post(`${API_URL}/vehicle/add`, vehicle);
 		console.log("in add api2");
-		console.log(response);
+		// console.log(response);
 		return response;
 	} catch (error) {
 		throw error;

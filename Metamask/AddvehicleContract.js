@@ -8,8 +8,14 @@ import {
 } from "wagmi";
 import addVehicleABI from "./ABI's/addVehicleABI.json";
 import Web3 from "./WalleConnect";
+import { addVehicle } from "../util/vehicleApi";
+import { getSessionToken } from "../util/tokenStore";
+import { fetchUserDetails } from "../util/Api";
+import { useNavigation } from "@react-navigation/native";
 
-export default function AddVehicle({ values }) {
+export default function AddvehicleContract({ values }) {
+	const navigation = useNavigation();
+
 	const {
 		vehicleID,
 		year,
@@ -60,16 +66,31 @@ export default function AddVehicle({ values }) {
 	const { data, isLoading, isSuccess, write } = useContractWrite(config);
 
 	useEffect(() => {
-		if (isLoading) {
-			console.log("Loading...");
-		}
-		if (isSuccess) {
-			console.log("Vehicle added successfully", JSON.stringify(data));
-			Alert.alert("Vehicle added successfully.", [
-				{ text: "OK", style: "cancel" },
-			]);
+		const addVehicleToChainAndDB = async () => {
+			if (isLoading) {
+				console.log("Loading...");
+			}
+			if (isSuccess) {
+				console.log("Vehicle added successfully to chain", JSON.stringify(data));
+				try {
+					const token = await getSessionToken();
+					const thisuser = await fetchUserDetails(token);
+					const userId = thisuser.data.id;
+					values.ownerId = userId;
+					const addtoDB = await addVehicle(values);
+					if (addtoDB.status == 200) {
+						console.log("Vehicle added to DB successfully");
+						navigation.navigate("Traffic");
+					} else {
+						console.log("Error adding vehicle to DB, status code:", addtoDB.status);
+					}
+				} catch (error) {
+					console.log("Error adding vehicle to DB", error);
+				}
+			}
+		};
 
-		}
+		addVehicleToChainAndDB();
 	}, [isLoading, isSuccess]);
 
 	return (
@@ -83,9 +104,8 @@ export default function AddVehicle({ values }) {
 					}
 				}}
 			>
-				Add
+				Add Vehicle
 			</PrimaryButton>
 		</Web3>
 	);
 }
-

@@ -26,21 +26,31 @@ import { logoutUser, fetchUserDetails, isSessionValid } from "../util/Api";
 import FadedView from "../Components/FadeView";
 import { BlurView } from "expo-blur";
 import { getUserVehicles } from "../util/vehicleApi";
+import { getVehicleChallans } from "../util/challanApi";
 import { getSessionToken } from "../util/tokenStore";
 import Web3 from "../Metamask/WalleConnect";
 
 export default function Traffic({ navigation }) {
 	const [vehicles, setVehicles] = useState([]);
+	const [challans, setChallans] = useState([]);
 
 	const getallvehicles = async () => {
 		const token = await getSessionToken();
 		const thisUser = await fetchUserDetails(token);
 		console.log("thisUser.data.id: ", thisUser.data.id);
 		// setMyUser(thisUser.data.id);
+		//Vehicles:
 		const myvehicles = await getUserVehicles(thisUser.data.id);
 		console.log("myvehicles: ", myvehicles);
 		setVehicles(myvehicles);
 	};
+
+	// const getChallans = async (vehicleID) => {
+	// 	//Vehicles:
+	// 	const myChallans = await getUserVehicles(vehicleID);
+	// 	console.log("myChallans: ", myChallans);
+	// 	setChallans(myChallans);
+	// };
 
 	useEffect(() => {
 		const checkSessionValidity = async () => {
@@ -70,7 +80,7 @@ export default function Traffic({ navigation }) {
 					<ScrollView
 						horizontal={true}
 						showsHorizontalScrollIndicator={false}
-						contentContainerStyle={{ paddingRight: 200 }}
+						contentContainerStyle={{ paddingRight: 50 }}
 						className="px-3 space-x-3"
 					>
 						{vehicles.map((vehicle, index) => (
@@ -191,23 +201,6 @@ export default function Traffic({ navigation }) {
 									<Text className="p-2 ">3. ₹500 • No parking zone</Text>
 								</View>
 							</View>
-
-							<View className="overflow-hidden justify-center mt-3 rounded-[16px] bg-[#9ac3ffff] p-2 ">
-								<Text className=" text-base font-bold pt-1 px-3 pb-4">
-									Chalaan History
-								</Text>
-								<View className="justify-evenly px-2">
-									<Text className="p-2 border-b border-gray-600">
-										1. ₹10000 • Overspeeding
-									</Text>
-									<Text className="p-2 border-b border-gray-600">
-										2. ₹2000 • Crossin red lights
-									</Text>
-									<Text className="p-2 ">3. ₹500 • No parking zone</Text>
-								</View>
-							</View>
-
-							{/* <View className=" py-48 "></View> */}
 						</ScrollView>
 					</View>
 				</View>

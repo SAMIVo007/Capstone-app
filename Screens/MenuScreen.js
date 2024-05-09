@@ -28,7 +28,7 @@ import FadedView from "../Components/FadeView";
 import Traffic from "./Traffic";
 import PrimaryButton from "../Components/primaryButton";
 
-export default function MenuScreen({ navigateTo, token }) {
+export default function MenuScreen({ navigation }) {
 	const [Notifications, setNotifications] = useState(true);
 	const items = [1, 2, 3, 4];
 
@@ -130,16 +130,9 @@ export default function MenuScreen({ navigateTo, token }) {
 					{/* ///////////////////////////////////////////////////////////////////////////////////////////////////////// */}
 
 					<View
-						intensity={88}
-						tint="light"
+						className="flex-1 rounded-t-[32px] bg-white pt-3 overflow-hidden"
 						style={{
-							flex: 1,
-							borderTopLeftRadius: 32,
-							borderTopRightRadius: 32,
-							overflow: "hidden",
-							paddingTop: 6,
 							elevation: 30,
-							// borderWidth: 2,
 						}}
 					>
 						<ScrollView
@@ -158,14 +151,14 @@ export default function MenuScreen({ navigateTo, token }) {
 											borderTopRightRadius: 16,
 											borderBottomRightRadius: 16,
 											overflow: "hidden",
-											backgroundColor: "#0052ceff",
+											backgroundColor: Colors.primaryBlue,
 											height: 50,
 											width: 50,
 											justifyContent: "center",
 											alignItems: "center",
 										}}
 									>
-										<Feather name="activity" size={24} color={Colors.primaryBlue} />
+										<Feather name="activity" size={24} color="white" />
 									</View>
 									<Text className="text-base font-medium mx-2 p-4 ">My Activity</Text>
 								</View>
@@ -174,7 +167,10 @@ export default function MenuScreen({ navigateTo, token }) {
 								</View>
 							</TouchableOpacity>
 
-							<TouchableOpacity onPress={()=> navigateTo(6)} className="flex-row justify-between items-center">
+							<TouchableOpacity
+								onPress={() => navigateTo(6)}
+								className="flex-row justify-between items-center"
+							>
 								<View className="flex-row items-center">
 									<View
 										intensity={88}
@@ -185,18 +181,14 @@ export default function MenuScreen({ navigateTo, token }) {
 											borderTopRightRadius: 16,
 											borderBottomRightRadius: 16,
 											overflow: "hidden",
-											backgroundColor: "#0052ceff",
+											backgroundColor: Colors.primaryBlue,
 											height: 50,
 											width: 50,
 											justifyContent: "center",
 											alignItems: "center",
 										}}
 									>
-										<MaterialCommunityIcons
-											name="car-multiple"
-											size={24}
-											color={Colors.primaryBlue}
-										/>
+										<MaterialCommunityIcons name="car-multiple" size={24} color="white" />
 									</View>
 									<Text className="text-base font-medium mx-2 p-4 ">My Vehicles</Text>
 								</View>
@@ -216,14 +208,14 @@ export default function MenuScreen({ navigateTo, token }) {
 											borderTopRightRadius: 16,
 											borderBottomRightRadius: 16,
 											overflow: "hidden",
-											backgroundColor: "#0052ceff",
+											backgroundColor: Colors.primaryBlue,
 											height: 50,
 											width: 50,
 											justifyContent: "center",
 											alignItems: "center",
 										}}
 									>
-										<Ionicons name="language" size={24} color={Colors.primaryBlue} />
+										<Ionicons name="language" size={24} color="white" />
 									</View>
 									<Text className="text-base font-medium mx-2 p-4 ">Language</Text>
 								</View>
@@ -248,14 +240,14 @@ export default function MenuScreen({ navigateTo, token }) {
 											borderTopRightRadius: 16,
 											borderBottomRightRadius: 16,
 											overflow: "hidden",
-											backgroundColor: "#0052ceff",
+											backgroundColor: Colors.primaryBlue,
 											height: 50,
 											width: 50,
 											justifyContent: "center",
 											alignItems: "center",
 										}}
 									>
-										<Feather name="bell" size={24} color={Colors.primaryBlue} />
+										<Feather name="bell" size={24} color="white" />
 									</View>
 									<Text className="text-base font-medium mx-2 p-4 ">Notifications</Text>
 								</View>
@@ -281,14 +273,14 @@ export default function MenuScreen({ navigateTo, token }) {
 											borderTopRightRadius: 16,
 											borderBottomRightRadius: 16,
 											overflow: "hidden",
-											backgroundColor: "#0052ceff",
+											backgroundColor: Colors.primaryBlue,
 											height: 50,
 											width: 50,
 											justifyContent: "center",
 											alignItems: "center",
 										}}
 									>
-										<Feather name="unlock" size={24} color={Colors.primaryBlue} />
+										<Feather name="unlock" size={24} color="white" />
 									</View>
 									<Text className="text-base font-medium mx-2 p-4 ">
 										Change Password
@@ -310,14 +302,14 @@ export default function MenuScreen({ navigateTo, token }) {
 											borderTopRightRadius: 16,
 											borderBottomRightRadius: 16,
 											overflow: "hidden",
-											backgroundColor: "#0052ceff",
+											backgroundColor: Colors.primaryBlue,
 											height: 50,
 											width: 50,
 											justifyContent: "center",
 											alignItems: "center",
 										}}
 									>
-										<Feather name="help-circle" size={24} color={Colors.primaryBlue} />
+										<Feather name="help-circle" size={24} color="white" />
 									</View>
 									<Text className="text-base font-medium mx-2 p-4 ">Help</Text>
 								</View>
@@ -326,7 +318,12 @@ export default function MenuScreen({ navigateTo, token }) {
 								</View>
 							</TouchableOpacity>
 
-							<TouchableOpacity className="flex-row justify-between items-center mb-3">
+							<TouchableOpacity
+								onPress={() => {
+									navigation.navigate("ChallanPage");
+								}}
+								className="flex-row justify-between items-center mb-3"
+							>
 								<View className="flex-row items-center">
 									<View
 										intensity={88}
@@ -337,18 +334,14 @@ export default function MenuScreen({ navigateTo, token }) {
 											borderTopRightRadius: 16,
 											borderBottomRightRadius: 16,
 											overflow: "hidden",
-											backgroundColor: "#0052ceff",
+											backgroundColor: Colors.primaryBlue,
 											height: 50,
 											width: 50,
 											justifyContent: "center",
 											alignItems: "center",
 										}}
 									>
-										<MaterialIcons
-											name="error-outline"
-											size={24}
-											color={Colors.primaryBlue}
-										/>
+										<MaterialIcons name="error-outline" size={24} color="white" />
 									</View>
 									<Text className="text-base font-medium mx-2 p-4 ">Report</Text>
 								</View>
@@ -357,15 +350,16 @@ export default function MenuScreen({ navigateTo, token }) {
 								</View>
 							</TouchableOpacity>
 
-							<View className="mb-8">
-								<PrimaryButton>
-									<View className="flex-row items-center justify-center space-x-4">
-										<Feather name="log-out" size={20} color={"white"} />
-										<Text className="text-base text-center font-medium text-white">
-											Log Out
-										</Text>
-									</View>
-								</PrimaryButton>
+							<View className="mb-12 overflow-hidden rounded-xl border border-red-500 ">
+								<Pressable
+									android_ripple={{ color: "rgb(255, 175, 175)" }}
+									className=" p-3 flex-row items-center justify-center space-x-4"
+								>
+									<Feather name="log-out" size={20} color={"rgb(239, 68, 68)"} />
+									<Text className="text-base text-center font-medium text-red-500">
+										Log Out
+									</Text>
+								</Pressable>
 							</View>
 						</ScrollView>
 					</View>

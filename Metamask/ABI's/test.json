@@ -1,4 +1,4 @@
-Blockchain data: [
+[
   {
     "color": "Ksiw",
     "insuranceValidity": "Ksis",
@@ -28,5 +28,16 @@ Blockchain data: [
     "pollutionValidity": "yes",
     "vehicleId": 44048180597813453602326562734351324025098966208897425494240603688123167145984n,
     "year": 154n
+  },
+  {
+    "color": "Vbn",
+    "id": "clvbya1ex0004yemltutap726",
+    "make": "asdf",
+    "model": "dfghj",
+    "ownerId": "clvb57hq400006i2lagezy3kj",
+    "plateNumber": "qwedr",
+    "pollutionDone": null,
+    "pollutionExpiration": null,
+    "year": 1234
   }
 ]

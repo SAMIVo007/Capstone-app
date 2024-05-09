@@ -44,84 +44,55 @@ import { getSessionToken } from "../util/tokenStore";
 
 export default function Services({ route, navigation }) {
 	const width = Dimensions.get("window").width;
-	const { address, isConnecting, isDisconnected } = useAccount();
+	// const { address, isConnecting, isDisconnected } = useAccount();
 
-	//Reading the contract (getUserVehicles)
-	const { data, isError, isLoading, isSuccess } = useContractRead({
-		address: "0xe1eeeff54b4ebe113c383315ecd49b494cf32c46",
-		abi: addVehicleABI,
-		functionName: "getUserVehicles",
-		args: [address],
-	});
+	// //Reading the contract (getUserVehicles)
+	// const { data, isError, isLoading, isSuccess } = useContractRead({
+	// 	address: "0xe1eeeff54b4ebe113c383315ecd49b494cf32c46",
+	// 	abi: addVehicleABI,
+	// 	functionName: "getUserVehicles",
+	// 	args: [address],
+	// });
 
-	//adding data to api
+	// //adding data to api
 
-	const handleAddVehicles = async (vehicles) => {
-		try {
-			vehicles = vehicles.map(item => {
-				const { vehicleId, ...rest } = item;
-				return rest;
-			});
-			// console.log("vehicles stripped", vehicles);
-			const token = await getSessionToken();
-			// console.log("IN ADD vehicle 'token'", token);
-			const thisuser = await fetchUserDetails(token);
-			// console.log("IN ADD vehicle 'thisuser'", thisuser);
-			const userId = thisuser.data.id;
-				console.log(vehicles)
+	// const handleAddVehicles = async (vehicles) => {
+	// 	try {
+	// 		vehicles = vehicles.map(item => {
+	// 			const { vehicleId, ...rest } = item;
+	// 			return rest;
+	// 		});
+	// 		// console.log("vehicles stripped", vehicles);
+	// 		const token = await getSessionToken();
+	// 		// console.log("IN ADD vehicle 'token'", token);
+	// 		const thisuser = await fetchUserDetails(token);
+	// 		// console.log("IN ADD vehicle 'thisuser'", thisuser);
+	// 		const userId = thisuser.data.id;
+	// 			console.log(vehicles)
 
-			// Now you can send `vehicleData` to your backend API			////////////////
-			const addVehiclePromises = vehicles.map(async (vehicleDetails) => {
-				vehicleDetails.ownerId = userId;
-				console.log("Vehicle details in map : ", vehicleDetails);
+	// 		// Now you can send `vehicleData` to your backend API			////////////////
+	// 		const addVehiclePromises = vehicles.map(async (vehicleDetails) => {
+				// vehicleDetails.ownerId = userId;
+	// 			console.log("Vehicle details in map : ", vehicleDetails);
 
-				// vehicleDetails.vehicleID = toString(vehicleDetails.vehicleID);
-				vehicleDetails.year = vehicleDetails.year.toString();
-				console.log("Vehicle details in map : ", vehicleDetails);
-				const res = await addVehicle(vehicleDetails);
-				if (res.status !== 200) {
-					throw new Error("Error in adding vehicle");
-				}
-			});
+	// 			// vehicleDetails.vehicleID = toString(vehicleDetails.vehicleID);
+	// 			vehicleDetails.year = vehicleDetails.year.toString();
+	// 			console.log("Vehicle details in map : ", vehicleDetails);
+	// 			const res = await addVehicle(vehicleDetails);
+	// 			if (res.status !== 200) {
+	// 				throw new Error("Error in adding vehicle");
+	// 			}
+	// 		});
 
-			// vehicleDetails = {
-			// 	color: "Ksiw",
-			// 	insuranceValidity: "Ksis",
-			// 	make: "Djui",
-			// 	model: "Uei88",
-			// 	plateNumber: "Jsisi",
-			// 	pollutionValidity: "Maw9",
-			// 	vehicleId:
-			// 		"3864840070251481245731297437893173200",
-			// 	year: "1323",
-			// 	ownerId: userId,
-			// };
+	// 		await Promise.all(addVehiclePromises);
 
-			await Promise.all(addVehiclePromises);
+	// 		navigation.navigate("Traffic");
+	// 	} catch (error) {
+	// 		console.log(error);
+	// 		alert("Error in adding vehicles");
+	// 	}
+	// };
 
-			navigation.navigate("Traffic");
-		} catch (error) {
-			console.log(error);
-			alert("Error in adding vehicles");
-		}
-	};
-
-	/////////////////////////////////////////////////////////////////////////////////////
-
-	//Reading the contract (getVehicleDetails)
-	const {
-		data: dataRead,
-		isError: isErrorRead,
-		isLoading: isLoadingRead,
-		isSuccess: isSuccessRead,
-	} = useContractRead({
-		address: "0xe1eeeff54b4ebe113c383315ecd49b494cf32c46",
-		abi: addVehicleABI,
-		functionName: "getVehicleDetails",
-		args: [
-			37714071210109079784406556808003856668045919426043356748067531784989320413184,
-		],
-	});
 
 	return (
 		<Web3>

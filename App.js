@@ -17,6 +17,7 @@ import Services from "./Screens/Services";
 import Report from "./Screens/Report";
 import Traffic from "./Screens/Traffic";
 import AddVehicles from "./Screens/AddVehicles";
+import AddChallan from "./Screens/ChallanPage";
 import vehicleContract from "./Metamask/AddvehicleContract";
 import Colors from "./Components/Colors";
 import { NavigationContainer } from "@react-navigation/native";
@@ -31,7 +32,7 @@ export default function App() {
 		<Web3>
 			<NavigationContainer>
 				<Stack.Navigator
-					initialRouteName="Traffic"
+					initialRouteName="MenuScreen"
 					screenOptions={{ headerShown: false }}
 				>
 					<Stack.Screen name="LoginSplash" component={LoginSplash} />
@@ -41,7 +42,12 @@ export default function App() {
 					<Stack.Screen name="Services" component={Services} />
 					<Stack.Screen name="MenuScreen" component={MenuScreen} />
 					<Stack.Screen name="AddVehicles" component={AddVehicles} />
-					<Stack.Screen name="Traffic" component={Traffic} />
+					<Stack.Screen
+						name="Traffic"
+						component={Traffic}
+						screenOptions={{ headerShown: true }}
+					/>
+					<Stack.Screen name="ChallanPage" component={AddChallan} />
 					{/* <Stack.Screen name="Contract" component={vehicleContract} /> */}
 				</Stack.Navigator>
 			</NavigationContainer>
