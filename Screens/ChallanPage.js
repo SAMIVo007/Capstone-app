@@ -158,7 +158,6 @@ export default function AddChallan({ navigation }) {
 
 									{/* <PrimaryButton
 										onPress={async () => {
-											values.location = `State: ${selectedState}, City: ${selectedCity} Latitude: ${location.coords.latitude}, Longitude: ${location.coords.longitude}`;
 											try {
 												const addtoDB = await addChallan(values);
 												if (addtoDB.status == 200) {

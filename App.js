@@ -32,7 +32,7 @@ export default function App() {
 		<Web3>
 			<NavigationContainer>
 				<Stack.Navigator
-					initialRouteName="MenuScreen"
+					initialRouteName="Home"
 					screenOptions={{ headerShown: false }}
 				>
 					<Stack.Screen name="LoginSplash" component={LoginSplash} />

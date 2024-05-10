@@ -12,9 +12,9 @@ export const addChallan = async (challan) => {
 	}
 };
 
-export const getVehicleChallans = async (vehicleId) => {
+export const getAllChallans = async () => {
 	try {
-		const response = await axios.get(`${API_URL}/view/${vehicleId}`);
+		const response = await axios.get(`${API_URL}/view`);
 		return response.data;
 	} catch (error) {
 		throw error;
