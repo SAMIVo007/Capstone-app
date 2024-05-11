@@ -21,6 +21,7 @@ import { loginUser, fetchUserDetails } from "../util/Api";
 import { getSessionToken } from "../util/tokenStore";
 import AddvehicleContract from "../Metamask/AddvehicleContract";
 import Web3 from "../Metamask/WalleConnect";
+import { addVehicle } from "../util/vehicleApi";
 
 
 export default function AddVehicles({ navigation }) {
@@ -31,10 +32,10 @@ export default function AddVehicles({ navigation }) {
 				<Formik
 					initialValues={{
 						vehicleID: "",
-						year: 1,
+						year: 0,
 						make: "",
 						model: "",
-						plateNum: "",
+						plateNumber: "",
 						color: "",
 						insuranceValidity: "",
 						pollutionValidity: "",
@@ -68,7 +69,7 @@ export default function AddVehicles({ navigation }) {
 										className=" border-b mb-4 border-gray-200 py-2 px-2 text-base text-gray-700"
 										placeholder="Year"
 										onChangeText={handleChange("year")}
-										value={values.year.toString()}
+										value={values.year}
 									/>
 									<TextInput
 										className=" border-b mb-4 border-gray-200 py-2 px-2 text-base text-gray-700"
@@ -86,8 +87,8 @@ export default function AddVehicles({ navigation }) {
 									<TextInput
 										className=" border-b mb-4 border-gray-200 py-2 px-2 text-base text-gray-700"
 										placeholder="Enter Plate Number"
-										onChangeText={handleChange("plateNum")}
-										value={values.plateNum}
+										onChangeText={handleChange("plateNumber")}
+										value={values.plateNumber}
 									/>
 
 									<TextInput
@@ -113,6 +114,29 @@ export default function AddVehicles({ navigation }) {
 
 									<View className=" my-2">
 										<AddvehicleContract values={values} />
+
+										{/* <PrimaryButton
+											onPress={async () => {
+												values.ownerId = "clvb57hq400006i2lagezy3kj";
+												try {
+													const addtoDB = await addVehicle(values);
+													if (addtoDB.status == 200) {
+														console.log("vehicle added to DB successfully");
+														navigation.navigate("Traffic");
+													} else {
+														console.log(
+															"Error adding vehicle to DB, status code:",
+															addtoDB.status
+														);
+													}
+												} catch (error) {
+													console.log("Error adding vehicle to DB", error);
+												}
+											}}
+										>
+											DB only
+										</PrimaryButton> */}
+
 									</View>
 								</View>
 							</View>
