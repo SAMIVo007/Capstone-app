@@ -29,3 +29,27 @@ export const getChallansById = async (challanId) => {
 		throw error;
 	}
 };
+
+export const updateChallan = async (challan) => {
+	const { id, issueDate, reason, vehicleId } = challan;
+	try {
+		const response = await axios.put(`${API_URL}/${id}`, {
+			issueDate,
+			fine: "0",
+			reason,
+			vehicleId,
+		});
+		return response.data;
+	} catch (error) {
+		console.error(`Error updating challan: ${error.message}`);
+	}
+};
+
+export const deleteChallan = async (challanId) => {
+	try {
+		const response = await axios.delete(`${API_URL}/${challanId}`);
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+};

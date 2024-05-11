@@ -26,8 +26,9 @@ import { logoutUser, fetchUserDetails, isSessionValid } from "../util/Api";
 import FadedView from "../Components/FadeView";
 import { BlurView } from "expo-blur";
 import { getUserVehicles } from "../util/vehicleApi";
-import { getChallansById, getAllChallans } from "../util/challanApi";
+import { getChallansById, getAllChallans, deleteChallan } from "../util/challanApi";
 import { getSessionToken } from "../util/tokenStore";
+import PayChallanContract from "../Metamask/PayChallanContract";
 import Web3 from "../Metamask/WalleConnect";
 
 export default function Traffic({ navigation }) {
@@ -206,12 +207,20 @@ export default function Traffic({ navigation }) {
 												</Text>
 												<Text className="font-medium py-1 pl-5">Fine: ₹{challan.fine}</Text>
 											</View>
-											<Pressable
+											{/* <Pressable
 												android_ripple={{ color: "#9ac3ffff" }}
 												className="p-4 px-6 items-center rounded-lg justify-center overflow-hidden bg-primaryBlue"
 											>
 												<Text className="text-white">Pay</Text>
-											</Pressable>
+											</Pressable> */}
+											{challan.fine === "0" ? (
+												<View className="justify-center items-center px-3 flex-row">
+													<Text className=" font-medium pr-2">Paid</Text>
+													<AntDesign name="checkcircle" size={20} color="green" />
+												</View>
+											) : (
+												<PayChallanContract challan={challan} amount={0.001} />
+											)}
 										</TouchableOpacity>
 									))
 								) : challans === null ? (
