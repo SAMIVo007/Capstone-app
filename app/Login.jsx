@@ -46,10 +46,8 @@ export default function Login() {
 					ToastAndroid.SHORT,
 					ToastAndroid.BOTTOM
 				);
-				await logIn();
-				if (authState) {
-					router.replace("/(app)");
-				}
+				logIn();
+				router.replace("/(app)");
 			}
 		} catch (error) {
 			ToastAndroid.showWithGravity(

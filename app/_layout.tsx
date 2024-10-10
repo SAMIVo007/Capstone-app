@@ -15,17 +15,20 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { AndroidButton } from "@/components/AndroidButton";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { AuthProvider } from "../util/AuthContext";
+import Web3 from "@/Metamask/WalletConnect";
 
 export default function RootLayout() {
 	const colorScheme = useColorScheme();
 
 	return (
-		<AuthProvider>
-			<GestureHandlerRootView style={{ flex: 1 }}>
-				<ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-					<Slot />
-				</ThemeProvider>
-			</GestureHandlerRootView>
-		</AuthProvider>
+		<Web3>
+			<AuthProvider>
+				<GestureHandlerRootView style={{ flex: 1 }}>
+					<ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+						<Slot />
+					</ThemeProvider>
+				</GestureHandlerRootView>
+			</AuthProvider>
+		</Web3>
 	);
 }

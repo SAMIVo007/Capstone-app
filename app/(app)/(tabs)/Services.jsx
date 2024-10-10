@@ -27,23 +27,7 @@ import {
 import { StatusBar } from "expo-status-bar";
 import { AndroidButton } from "../../../components/AndroidButton";
 import React, { useState, useEffect } from "react";
-import { Carousel, Card } from "react-native-ui-lib";
 import Colors from "../../../components/Colors";
-import {
-	logoutUser,
-	fetchUserDetails,
-	isSessionValid,
-} from "../../../util/authApi";
-import { addVehicle } from "../../../util/vehicleApi";
-import {
-	useContractRead,
-	useContractWrite,
-	usePrepareContractWrite,
-} from "wagmi";
-import Web3 from "../../../Metamask/WalletConnect";
-import addVehicleABI from "../../../Metamask/ABI's/addVehicleABI.json";
-import { useAccount } from "wagmi";
-import { getSessionToken } from "../../../util/tokenStore";
 import { router } from "expo-router";
 
 export default function Services({ route, navigation }) {
@@ -98,7 +82,7 @@ export default function Services({ route, navigation }) {
 	// };
 
 	return (
-		<Web3>
+		<>
 			<View className="flex-1 p-3 bg-white">
 				<View className="p-2 pt-10 flex-row justify-between items-center ">
 					<View className="flex-row justify-between items-center">
@@ -304,6 +288,6 @@ export default function Services({ route, navigation }) {
 					<Text className="text-[#454545] text-xs">Menu</Text>
 				</TouchableOpacity>
 			</View> */}
-		</Web3>
+		</>
 	);
 }

@@ -1,21 +1,25 @@
 import "@walletconnect/react-native-compat";
-import { WagmiConfig } from "wagmi";
-import { mainnet, polygon, arbitrum, sepolia } from "viem/chains";
+import { WagmiProvider } from "wagmi";
+import { sepolia } from "@wagmi/core/chains";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
-	createWeb3Modal,
+	createAppKit,
 	defaultWagmiConfig,
-	Web3Modal,
-} from "@web3modal/wagmi-react-native";
+	AppKit,
+} from "@reown/appkit-wagmi-react-native";
 
-// 1. Get projectId at https://cloud.walletconnect.com
+// 0. Setup queryClient
+const queryClient = new QueryClient();
+
+// 1. Get projectId at https://cloud.reown.com
 const projectId = "ef8575faa68ff415bfe22a4f3f090665";
 
 // 2. Create config
 const metadata = {
-	name: "Web3Modal RN",
-	description: "Connecting web3 wallets to your RN app",
-	url: "https://web3modal.com",
-	icons: ["https://avatars.githubusercontent.com/u/37784886"],
+	name: "AppKit RN",
+	description: "AppKit RN Example",
+	url: "https://reown.com/appkit",
+	icons: ["https://avatars.githubusercontent.com/u/179229932"],
 	redirect: {
 		native: "YOUR_APP_SCHEME://",
 		universal: "YOUR_APP_UNIVERSAL_LINK.com",
@@ -27,18 +31,20 @@ const chains = [sepolia];
 const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata });
 
 // 3. Create modal
-createWeb3Modal({
+createAppKit({
 	projectId,
 	chains,
 	wagmiConfig,
 	enableAnalytics: true, // Optional - defaults to your Cloud configuration
 });
 
-const Web3 = ({ children }) => (
-	<WagmiConfig config={wagmiConfig}>
-		{children}
-		<Web3Modal />
-	</WagmiConfig>
-);
-
-export default Web3;
+export default function Web3({ children }) {
+	return (
+		<WagmiProvider config={wagmiConfig}>
+			<QueryClientProvider client={queryClient}>
+				{children}
+				<AppKit />
+			</QueryClientProvider>
+		</WagmiProvider>
+	);
+}

@@ -1,1 +1,36 @@
-{"config": {"adapter": ["xhr", "http", "fetch"], "data": "{\"email\":\"asd@gmale\",\"password\":\"asd@1234\",\"checked\":false}", "env": {"Blob": [Function Blob], "FormData": [Function FormData]}, "headers": [Object], "maxBodyLength": -1, "maxContentLength": -1, "method": "post", "timeout": 0, "transformRequest": [[Function transformRequest]], "transformResponse": [[Function transformResponse]], "transitional": {"clarifyTimeoutError": false, "forcedJSONParsing": true, "silentJSONParsing": true}, "url": "https://anticorrupto.onrender.com/auth/login", "validateStatus": [Function validateStatus], "xsrfCookieName": "XSRF-TOKEN", "xsrfHeaderName": "X-XSRF-TOKEN"}, "data": {"message": "Incorrect password"}, "headers": {"access-control-allow-credentials": "true", "access-control-allow-origin": "https://anticorrupto.vercel.app", "alt-svc": "h3=\":443\"; ma=86400", "cf-cache-status": "DYNAMIC", "cf-ray": "8cfd84dfdbfa5514-DEL", "content-type": "application/json; charset=utf-8", "date": "Wed, 09 Oct 2024 09:59:39 GMT", "etag": "W/\"20-La30IV3IxG4lUSPZkoBsB25RUbw\"", "rndr-id": "eec2ab51-4532-496a", "server": "cloudflare", "vary": "Origin, Accept-Encoding", "x-powered-by": "Express", "x-render-origin-server": "Render"}, "request": {"DONE": 4, "HEADERS_RECEIVED": 2, "LOADING": 3, "OPENED": 1, "UNSENT": 0, "_aborted": false, "_cachedResponse": undefined, "_hasError": false, "_headers": {"accept": "application/json, text/plain, */*", "content-type": "application/json"}, "_incrementalEvents": false, "_lowerCaseResponseHeaders": {"access-control-allow-credentials": "true", "access-control-allow-origin": "https://anticorrupto.vercel.app", "alt-svc": "h3=\":443\"; ma=86400", "cf-cache-status": "DYNAMIC", "cf-ray": "8cfd84dfdbfa5514-DEL", "content-type": "application/json; charset=utf-8", "date": "Wed, 09 Oct 2024 09:59:39 GMT", "etag": "W/\"20-La30IV3IxG4lUSPZkoBsB25RUbw\"", "rndr-id": "eec2ab51-4532-496a", "server": "cloudflare", "vary": "Origin, Accept-Encoding", "x-powered-by": "Express", "x-render-origin-server": "Render"}, "_method": "POST", "_perfKey": "network_XMLHttpRequest_https://anticorrupto.onrender.com/auth/login", "_performanceLogger": {"_closed": false, "_extras": [Object], "_pointExtras": [Object], "_points": [Object], "_timespans": [Object]}, "_requestId": null, "_response": "{\"message\":\"Incorrect password\"}", "_responseType": "", "_sent": true, "_subscriptions": [], "_timedOut": false, "_trackingName": "unknown", "_url": "https://anticorrupto.onrender.com/auth/login", "readyState": 4, "responseHeaders": {"access-control-allow-credentials": "true", "access-control-allow-origin": "https://anticorrupto.vercel.app", "alt-svc": "h3=\":443\"; ma=86400", "cf-cache-status": "DYNAMIC", "cf-ray": "8cfd84dfdbfa5514-DEL", "content-type": "application/json; charset=utf-8", "date": "Wed, 09 Oct 2024 09:59:39 GMT", "etag": "W/\"20-La30IV3IxG4lUSPZkoBsB25RUbw\"", "rndr-id": "eec2ab51-4532-496a", "server": "cloudflare", "vary": "Origin, Accept-Encoding", "x-powered-by": "Express", "x-render-origin-server": "Render"}, "responseURL": "https://anticorrupto.onrender.com/auth/login", "status": 203, "timeout": 0, "upload": {}, "withCredentials": true}, "status": 203, "statusText": undefined}
+{
+	"access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtMTk4MmZlejAwMDByMHRrNWJyMndiNjIiLCJpYXQiOjE3Mjg1ODkwNDEsImV4cCI6MTcyODY3NTQ0MX0.VpICMBp56fHRCp_UGBrQQZuANMaolTO5lb-maauI5q8",
+	"createdAt": "2024-09-19T11:42:18.252Z",
+	"email": "asd@gmale",
+	"emailVerified": null,
+	"expires_at": null,
+	"hashedPassword": "$2b$10$6y.eOhphe5emnk9fbjurQugrv53R20vyFaMIm8SOx06TrLOZu83vC",
+	"id": "cm1982fez0000r0tk5br2wb62",
+	"id_token": null,
+	"name": "Yuvraj  Singh ",
+	"refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtMTk4MmZlejAwMDByMHRrNWJyMndiNjIiLCJpYXQiOjE3Mjg1ODkwNDEsImV4cCI6MTczMDMxNzA0MX0.U_-yPGjLdDx24da85GYyM1lM4_2Pfpo4a1Tlyx50VLc",
+	"role": "ADMIN",
+	"scope": null,
+	"session_state": null,
+	"token_type": null,
+	"updatedAt": "2024-10-10T19:37:21.509Z",
+
+  
+	"idx": {
+		"access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtMTk4MmZlejAwMDByMHRrNWJyMndiNjIiLCJpYXQiOjE3Mjg1ODkwNDEsImV4cCI6MTcyODY3NTQ0MX0.VpICMBp56fHRCp_UGBrQQZuANMaolTO5lb-maauI5q8",
+		"createdAt": "2024-09-19T11:42:18.252Z",
+		"email": "asd@gmale",
+		"emailVerified": null,
+		"expires_at": null,
+		"hashedPassword": "$2b$10$6y.eOhphe5emnk9fbjurQugrv53R20vyFaMIm8SOx06TrLOZu83vC",
+		"id": "cm1982fez0000r0tk5br2wb62",
+		"id_token": null,
+		"name": "Yuvraj  Singh ",
+		"refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtMTk4MmZlejAwMDByMHRrNWJyMndiNjIiLCJpYXQiOjE3Mjg1ODkwNDEsImV4cCI6MTczMDMxNzA0MX0.U_-yPGjLdDx24da85GYyM1lM4_2Pfpo4a1Tlyx50VLc",
+		"role": "ADMIN",
+		"scope": null,
+		"session_state": null,
+		"token_type": null,
+		"updatedAt": "2024-10-10T19:37:21.509Z"
+	}
+}

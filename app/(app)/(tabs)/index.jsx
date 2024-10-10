@@ -2,17 +2,10 @@ import {
 	Image,
 	ScrollView,
 	Text,
-	TextInput,
-	SafeAreaView,
 	View,
-	Button,
 	TouchableOpacity,
-	Modal,
 	Dimensions,
-	Pressable,
-	StyleSheet,
 	useColorScheme,
-	ToastAndroid,
 } from "react-native";
 import {
 	Ionicons,
@@ -26,38 +19,17 @@ import Animated, { useSharedValue } from "react-native-reanimated";
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
 import Carousel from "react-native-reanimated-carousel";
-import {
-	logoutUser,
-	fetchUserDetails,
-	isSessionValid,
-} from "../../../util/authApi";
 import FadedView from "../../../components/FadeView";
-import { getSessionToken } from "../../../util/tokenStore";
-import { useWeb3Modal } from "@web3modal/wagmi-react-native";
-import { W3mButton } from "@web3modal/wagmi-react-native";
-import Web3 from "../../../Metamask/WalletConnect";
+import { useAppKit } from "@reown/appkit-wagmi-react-native";
 import { router } from "expo-router";
+import { useAuth } from "../../../util/AuthContext";
 
 export default function HomePage() {
-	const [myuser, setmyuser] = useState("");
 	const width = Dimensions.get("window").width;
 	const progressValue = useSharedValue(0);
-	const { open } = useWeb3Modal();
+	const { open } = useAppKit();
 	const colorScheme = useColorScheme() ?? "light";
-
-	useEffect(() => {
-		const fetchDetails = async () => {
-			try {
-				const sessionToken = await getSessionToken();
-				const userDetails = await fetchUserDetails(sessionToken);
-				setmyuser(userDetails.data);
-			} catch (error) {
-				console.log("Error:", error);
-			}
-		};
-
-		fetchDetails();
-	}, []);
+	const { userData } = useAuth();
 
 	const items = [
 		{
@@ -78,7 +50,7 @@ export default function HomePage() {
 	];
 
 	return (
-		<Web3>
+		<>
 			<StatusBar style="light" />
 			<View
 				style={{
@@ -135,7 +107,7 @@ export default function HomePage() {
 					<FadedView>
 						<View className=" p-1 ml-4 ">
 							<Text className="text-white text-xl font-bold  pb-1">
-								Welcome, {myuser.name}
+								Welcome, {userData?.name}
 							</Text>
 						</View>
 
@@ -452,6 +424,6 @@ export default function HomePage() {
 					</ScrollView>
 				</View>
 			</ParallaxScrollView>
-		</Web3>
+		</>
 	);
 }
