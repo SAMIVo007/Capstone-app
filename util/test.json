@@ -1,36 +1,22 @@
-{
-	"access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtMTk4MmZlejAwMDByMHRrNWJyMndiNjIiLCJpYXQiOjE3Mjg1ODkwNDEsImV4cCI6MTcyODY3NTQ0MX0.VpICMBp56fHRCp_UGBrQQZuANMaolTO5lb-maauI5q8",
-	"createdAt": "2024-09-19T11:42:18.252Z",
-	"email": "asd@gmale",
-	"emailVerified": null,
-	"expires_at": null,
-	"hashedPassword": "$2b$10$6y.eOhphe5emnk9fbjurQugrv53R20vyFaMIm8SOx06TrLOZu83vC",
-	"id": "cm1982fez0000r0tk5br2wb62",
-	"id_token": null,
-	"name": "Yuvraj  Singh ",
-	"refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtMTk4MmZlejAwMDByMHRrNWJyMndiNjIiLCJpYXQiOjE3Mjg1ODkwNDEsImV4cCI6MTczMDMxNzA0MX0.U_-yPGjLdDx24da85GYyM1lM4_2Pfpo4a1Tlyx50VLc",
-	"role": "ADMIN",
-	"scope": null,
-	"session_state": null,
-	"token_type": null,
-	"updatedAt": "2024-10-10T19:37:21.509Z",
-
-  
-	"idx": {
-		"access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtMTk4MmZlejAwMDByMHRrNWJyMndiNjIiLCJpYXQiOjE3Mjg1ODkwNDEsImV4cCI6MTcyODY3NTQ0MX0.VpICMBp56fHRCp_UGBrQQZuANMaolTO5lb-maauI5q8",
-		"createdAt": "2024-09-19T11:42:18.252Z",
-		"email": "asd@gmale",
-		"emailVerified": null,
-		"expires_at": null,
-		"hashedPassword": "$2b$10$6y.eOhphe5emnk9fbjurQugrv53R20vyFaMIm8SOx06TrLOZu83vC",
-		"id": "cm1982fez0000r0tk5br2wb62",
-		"id_token": null,
-		"name": "Yuvraj  Singh ",
-		"refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtMTk4MmZlejAwMDByMHRrNWJyMndiNjIiLCJpYXQiOjE3Mjg1ODkwNDEsImV4cCI6MTczMDMxNzA0MX0.U_-yPGjLdDx24da85GYyM1lM4_2Pfpo4a1Tlyx50VLc",
-		"role": "ADMIN",
-		"scope": null,
-		"session_state": null,
-		"token_type": null,
-		"updatedAt": "2024-10-10T19:37:21.509Z"
+[
+	{
+		"clientId": "cm14ydciv000014gerurjx78k",
+		"id": "cm30fg1ye0003901n95dd46oi",
+		"inquiryDate": "2024-11-02T17:18:20.390Z",
+		"land": {
+			"area": "2345",
+			"boughtPrice": "1",
+			"currentPrice": null,
+			"dimensionOfLand": "187x34",
+			"id": "cm30er8g10001p1cm653sfo3g",
+			"landIdentificationNumber": "abcd1234",
+			"landType": "Commercial",
+			"location": "chandigarh",
+			"ownerId": "cm1982fez0000r0tk5br2wb62",
+			"parcelStatus": null,
+			"web3Id": "15"
+		},
+		"landId": "cm30er8g10001p1cm653sfo3g",
+		"status": "PENDING"
 	}
-}
+]

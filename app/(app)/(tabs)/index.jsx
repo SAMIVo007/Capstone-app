@@ -23,6 +23,7 @@ import FadedView from "../../../components/FadeView";
 import { useAppKit } from "@reown/appkit-wagmi-react-native";
 import { router } from "expo-router";
 import { useAuth } from "../../../util/AuthContext";
+import Web3 from "../../../Metamask/WalletConnect";
 
 export default function HomePage() {
 	const width = Dimensions.get("window").width;
@@ -102,6 +103,7 @@ export default function HomePage() {
 			</View>
 
 			<ParallaxScrollView
+				bgColor={"#1e00c7"}
 				headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
 				headerImage={
 					<FadedView>
@@ -138,83 +140,11 @@ export default function HomePage() {
 				{/* <StatusBar style="light" /> */}
 
 				<View className="flex-1 bg-[#efedff]">
-					{/* <View className="p-4 pt-12 flex-row justify-between items-center ">
-							<View className="flex-row justify-between items-center">
-								<Image
-								source={require("../assets/Images/Emblem_of_India.png")}
-								className="w-[12%] h-[100%]"
-								tintColor={"#0062f5"}
-							/> 
-								<Ionicons
-									name="person-circle-outline"
-									size={26}
-									color={"white"}
-									style={{ marginRight: 6 }}
-								/>
-
-								<Text className="text-white text-lg text-center font-bold">
-									Anti Corruptō
-								</Text>
-							</View>
-
-							<View className="flex-row justify-between items-center">
-								<TouchableOpacity onPress={() => open()}>
-									<Ionicons
-										name="wallet-outline"
-										size={25}
-										color={"white"}
-										style={{ padding: 2, paddingHorizontal: 8 }}
-									/>
-								</TouchableOpacity>
-
-								<Feather
-									name="bell"
-									size={24}
-									color={"white"}
-									style={{ padding: 2, paddingHorizontal: 8 }}
-								/>
-								<AntDesign
-									name="search1"
-									size={24}
-									color={"white"}
-									style={{ padding: 2, paddingHorizontal: 8, paddingRight: 0 }}
-								/>
-							</View>
-						</View> */}
-
 					<ScrollView
 						showsVerticalScrollIndicator={false}
 						fadingEdgeLength={300}
 						className="flex-1"
 					>
-						{/* <View className=" p-1 ml-4 ">
-								<Text className="text-white text-xl font-bold  pb-1">
-									Welcome, {myuser.name}
-								</Text>
-							</View>
-
-							<View className=" mt-4 ">
-								<ScrollView
-									horizontal={true}
-									showsHorizontalScrollIndicator={false}
-									className="px-3"
-								>
-									<View
-										className="mr-3 bg-amber-500 rounded-2xl"
-										style={{ width: 300, height: 150 }}
-									></View>
-									<View
-										className="mr-3 bg-amber-500 rounded-2xl"
-										style={{ width: 300, height: 150 }}
-									></View>
-									<View
-										className="mr-3 bg-amber-500 rounded-2xl"
-										style={{ width: 300, height: 150 }}
-									></View>
-									<View className="mx-2"></View>
-								</ScrollView>
-							</View> */}
-
 						<View
 							style={{
 								borderTopRightRadius: 32,
@@ -239,7 +169,7 @@ export default function HomePage() {
 							<View className="flex-row justify-evenly space-x-4">
 								<TouchableOpacity
 									onPress={() => {
-										router.navigate("AddVehicles");
+										router.navigate("/(app)/Traffic");
 									}}
 								>
 									<View className="bg-primaryBlue rounded-lg p-4 ">
@@ -253,7 +183,11 @@ export default function HomePage() {
 									<Text className="text-center text-sm p-1">Traffic</Text>
 								</TouchableOpacity>
 
-								<TouchableOpacity>
+								<TouchableOpacity
+									onPress={() => {
+										router.navigate("/(app)/Lands");
+									}}
+								>
 									<View className="bg-primaryBlue rounded-lg p-4 ">
 										<Ionicons
 											name="language"
@@ -324,7 +258,11 @@ export default function HomePage() {
 									</View>
 									<Text className="text-center text-sm p-1">Drive</Text>
 								</TouchableOpacity>
-								<TouchableOpacity>
+								<TouchableOpacity
+									onPress={() => {
+										router.navigate("/(app)/Marketplace");
+									}}
+								>
 									<View className="bg-primaryBlue rounded-lg p-4 ">
 										<Ionicons
 											name="language"
@@ -333,7 +271,7 @@ export default function HomePage() {
 											style={{ padding: 2, paddingHorizontal: 8 }}
 										/>
 									</View>
-									<Text className="text-center text-sm p-1">Explore</Text>
+									<Text className="text-center text-sm p-1">Marketplace</Text>
 								</TouchableOpacity>
 							</View>
 

@@ -75,9 +75,9 @@ export default function MenuScreen() {
 					</View>
 
 					{/* <AndroidButton className="rounded-3xl"> */}
-					<View className="flex-row pr-5 py-9 justify-center items-center">
+					<View className="flex-row px-6 py-9 justify-start items-center">
 						<Image
-							source={require("../../../assets/images/modi.jpeg")}
+							source={require("../../../assets/images/joker.png")}
 							style={{
 								width: 120,
 								height: 120,
@@ -87,8 +87,8 @@ export default function MenuScreen() {
 							}}
 						/>
 						<View>
-							<Text className=" text-xl font-bold ml-4">Dr. Narendra Modi</Text>
-							<Text className=" text-xs ml-4">Web Developer</Text>
+							<Text className=" text-3xl font-bold ml-4">Yuvraj Singh</Text>
+							<Text className=" text-s ml-4">App Developer</Text>
 						</View>
 					</View>
 					{/* </AndroidButton> */}

@@ -12,7 +12,7 @@ import {
 const queryClient = new QueryClient();
 
 // 1. Get projectId at https://cloud.reown.com
-const projectId = "ef8575faa68ff415bfe22a4f3f090665";
+const projectId = "a5494817367ce66295c9e044e75f0155";
 
 // 2. Create config
 const metadata = {
@@ -22,23 +22,25 @@ const metadata = {
 	icons: ["https://avatars.githubusercontent.com/u/179229932"],
 	redirect: {
 		native: "YOUR_APP_SCHEME://",
-		universal: "YOUR_APP_UNIVERSAL_LINK.com",
+		universal: "YOUR_UNIVERSAL_LINK.com",
 	},
 };
 
-const chains = [sepolia];
+const chains = [sepolia] as const;
 
 const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata });
 
 // 3. Create modal
 createAppKit({
 	projectId,
-	chains,
 	wagmiConfig,
+	defaultChain: sepolia, // Optional
 	enableAnalytics: true, // Optional - defaults to your Cloud configuration
 });
 
-export default function Web3({ children }) {
+import { ReactNode } from "react";
+
+export default function Web3({ children }: { children: ReactNode }) {
 	return (
 		<WagmiProvider config={wagmiConfig}>
 			<QueryClientProvider client={queryClient}>

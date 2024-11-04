@@ -91,7 +91,7 @@ export default function Traffic({ navigation }) {
 	}, [vehicles]);
 
 	return (
-		<Web3>
+		<>
 			<View className="flex-1 overflow-hidden bg-[#dbebffff] justify-between">
 				<View className="mb-12">
 					{/* <Text className="mt-8 p-4 font-bold text-base">My Vehicles</Text> */}
@@ -242,6 +242,6 @@ export default function Traffic({ navigation }) {
 			</View>
 
 			<StatusBar style="dark" />
-		</Web3>
+		</>
 	);
 }

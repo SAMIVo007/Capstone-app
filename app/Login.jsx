@@ -133,7 +133,7 @@ export default function Login() {
 								<Text className="flex">Don't have an account yet?</Text>
 								<TouchableOpacity
 									className=" px-2 flex"
-									onPress={() => router.navigate("/(app)/(tabs)")}
+									onPress={() => router.navigate("/SignUp")}
 								>
 									<Text className="text-primaryBlue text-base font-semibold ">
 										Sign up

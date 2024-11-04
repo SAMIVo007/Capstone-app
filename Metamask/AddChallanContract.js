@@ -64,7 +64,6 @@ export default function AddChallanContract({ values }) {
 	}, [isLoading, isSuccess]);
 
 	return (
-		<Web3>
 			<PrimaryButton
 				onPress={() => {
 					try {
@@ -76,6 +75,5 @@ export default function AddChallanContract({ values }) {
 			>
 				Add Challan
 			</PrimaryButton>
-		</Web3>
 	);
 }

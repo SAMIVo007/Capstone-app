@@ -94,7 +94,6 @@ export default function AddvehicleContract({ values }) {
 	}, [isLoading, isSuccess]);
 
 	return (
-		<Web3>
 			<PrimaryButton
 				onPress={() => {
 					try {
@@ -106,6 +105,5 @@ export default function AddvehicleContract({ values }) {
 			>
 				Add Vehicle
 			</PrimaryButton>
-		</Web3>
 	);
 }

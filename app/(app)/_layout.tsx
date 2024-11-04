@@ -2,10 +2,8 @@ import { Redirect, router, Stack } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { AndroidButton } from "@/components/AndroidButton";
 import { useAuth } from "../../util/AuthContext";
-import { ThemedText } from "@/components/ThemedText";
-import { Text } from "react-native";
-import { ThemedView } from "@/components/ThemedView";
 import LottieSplashScreen from "@/components/LottieSplashScreen";
+import Web3 from "@/Metamask/WalletConnect";
 
 export default function AppLayout() {
 	const { authState } = useAuth(); // Access auth state from context
@@ -13,26 +11,7 @@ export default function AppLayout() {
 
 	if (authState === null) {
 		console.log("Checking authentication, showing loading state...");
-		return (
-			// <ThemedView
-			// 	style={{
-			// 		flex: 1,
-			// 		justifyContent: "center",
-			// 		alignItems: "center",
-			// 		height: "100%",
-			// 	}}
-			// >
-			// 	<ThemedText
-			// 		style={{
-			// 			fontSize: 20,
-			// 			textAlign: "center",
-			// 		}}
-			// 	>
-			// 		Loading...
-			// 	</ThemedText>
-			// </ThemedView>
-			<LottieSplashScreen />
-		);
+		return <LottieSplashScreen />;
 	}
 
 	if (!authState) {
@@ -54,6 +33,7 @@ export default function AppLayout() {
 						<AndroidButton
 							onPress={() => router.back()}
 							style={null}
+							innerStyle={null}
 							className="rounded-full ml-[-12] mr-1"
 							rippleColor="#86aad4ff"
 						>
@@ -73,12 +53,25 @@ export default function AppLayout() {
 						<AndroidButton
 							onPress={() => router.back()}
 							style={null}
+							innerStyle={null}
 							className="rounded-full ml-[-12] mr-1"
 							rippleColor="#86aad4ff"
 						>
 							<Ionicons name="chevron-back" size={24} color="black" />
 						</AndroidButton>
 					),
+				}}
+			/>
+			<Stack.Screen
+				name="Marketplace"
+				options={{
+					headerShown: false,
+				}}
+			/>
+			<Stack.Screen
+				name="LandInfo"
+				options={{
+					headerShown: false,
 				}}
 			/>
 		</Stack>

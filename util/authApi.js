@@ -4,7 +4,7 @@ import { getSessionToken } from "./tokenStore";
 
 const API_URL = `${backendURL}/auth`;
 
-const getHeader = async () => {
+const getHeader = async() => {
 	const sessionToken = await getSessionToken();
 	return {
 		headers: {
@@ -50,18 +50,20 @@ export const logoutUser = async () => {
 	try {
 		const header = await getHeader();
 		const response = await axios.post(`${API_URL}/logout`, null, header);
-		if (response.status == 200) return true;
-		else return false;
+		if (response.status == 200) {
+			console.log("Logged out successfully");
+			return true;
+		} else return false;
 	} catch (error) {
 		console.log(error);
 	}
 };
 
-export const isSessionValid = async (sessionId) => {
+export const isSessionValid = async (sessionToken) => {
 	try {
 		const header = await getHeader();
 		const response = await axios.get(
-			`${API_URL}/verifysession/${sessionId}`,
+			`${API_URL}/verifysession/${sessionToken}`,
 			header
 		);
 		if (response.status == 200) {
@@ -73,10 +75,13 @@ export const isSessionValid = async (sessionId) => {
 	}
 };
 
-export const fetchUserDetails = async (sessionId) => {
+export const fetchUserDetails = async (sessionToken) => {
 	try {
 		const header = await getHeader();
-		const response = await axios.get(`${API_URL}/getuser/${sessionId}`, header);
+		const response = await axios.get(
+			`${API_URL}/getuser/${sessionToken}`,
+			header
+		);
 		if (response.status == 200) {
 			return response;
 		}
@@ -99,4 +104,3 @@ export const fetchUserEmail = async (clientId) => {
 		console.log(error);
 	}
 };
-

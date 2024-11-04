@@ -7,21 +7,26 @@ import {
 	useWindowDimensions,
 	Image,
 	TouchableOpacity,
+	useColorScheme,
 } from "react-native";
 import { ThemedText } from "./ThemedText";
 import { Feather, FontAwesome6, MaterialIcons } from "@expo/vector-icons";
 import { AndroidButton } from "./AndroidButton";
 
 export default function LandCard({
-	name = "Chache hora di dabbi hoyi jameen",
-	type = "Agricultural",
-	area = "40 Kille",
+	name = "Singla Farms",
+	landIdentificationNumber = "101010",
+	landType = "Agricultural",
+	area = "40",
+	dimensionOfLand = "0x0",
 	location = "Bhadson Road",
-	city = "Tarntaran",
 	imgUri = "https://rismedia.com/wp-content/uploads/2021/03/luxury_real_estate_1150278000.jpg",
 	onpress,
 }) {
 	// const { height, width } = useWindowDimensions();
+	const theme = useColorScheme();
+	const gradient =
+		theme === "dark" ? ["#151718ff", "#ffffff00"] : ["#f5faffff", "#ffffff00"];
 
 	return (
 		<TouchableOpacity activeOpacity={0.85} onPress={onpress}>
@@ -41,7 +46,7 @@ export default function LandCard({
 				}}
 			>
 				<LinearGradient
-					colors={["#f5faffff", "#ffffff00"]}
+					colors={gradient}
 					start={{ x: 0.47, y: 0 }}
 					end={{ x: 0.9, y: 0 }}
 					style={{
@@ -53,12 +58,15 @@ export default function LandCard({
 					<ThemedText type="subtitle" className="pb-1 mr-32">
 						{name}
 					</ThemedText>
-					<ThemedText type="small">{type}</ThemedText>
-					<ThemedText type="small">Area: {area}</ThemedText>
 					<ThemedText type="small">
-						{location + ",  "}
+						{landType} ({landIdentificationNumber})
+					</ThemedText>
+					<ThemedText type="small">
+						{area} sqft. ({dimensionOfLand})
+					</ThemedText>
+					<ThemedText type="small">
 						<FontAwesome6 name="location-dot" size={13} color="black" />
-						{" " + city}
+						{" " + location}
 					</ThemedText>
 
 					<View className="flex-row border-t border-gray-300 mt-2 pt-3 justify-between items-center">

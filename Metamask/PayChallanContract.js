@@ -53,7 +53,6 @@ export default function PayChallanContract({ amount, challan }) {
 	}, [isLoading, isSuccess]);
 
 	return (
-		<Web3>
 			<Pressable
 				android_ripple={{ color: "#9ac3ffff" }}
 				className="p-4 px-6 items-center rounded-lg justify-center overflow-hidden bg-primaryBlue"
@@ -67,6 +66,5 @@ export default function PayChallanContract({ amount, challan }) {
 			>
 				<Text className="text-white">Pay</Text>
 			</Pressable>
-		</Web3>
 	);
 }
