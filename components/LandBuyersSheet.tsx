@@ -227,7 +227,7 @@ const LandBuyersSheet = forwardRef<Ref, Props>((props, ref) => {
 					>
 						<ThemedText
 							type="subtitle"
-							style={{ color: colorMode == "dark" ? "#aeaeae" : "#555555" }}
+							style={{ color: colorMode == "dark" ? "#aeaeae" : "#4a4a4a" }}
 						>
 							No buyers yet...
 						</ThemedText>

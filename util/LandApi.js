@@ -14,6 +14,7 @@ const getHeader = async () => {
 };
 
 export const getAllLands = async () => {
+	console.log("In getlands api");
 	try {
 		const header = await getHeader();
 		const response = await axios.get(`${API_URL}/all`, header);

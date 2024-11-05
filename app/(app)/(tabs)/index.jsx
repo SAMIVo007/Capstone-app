@@ -224,7 +224,11 @@ export default function HomePage() {
 							</View>
 
 							<View className="flex-row justify-evenly space-x-4 mt-4">
-								<TouchableOpacity>
+								<TouchableOpacity
+									onPress={() => {
+										router.navigate("/(app)/UserLandInterests");
+									}}
+								>
 									<View className="bg-primaryBlue rounded-lg p-4 ">
 										<Ionicons
 											name="language"

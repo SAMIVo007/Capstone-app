@@ -59,7 +59,6 @@ export const getUserInterestedLands = async (clientId) => {
 		console.log("In api : ", clientId);
 		const header = await getHeader();
 		const response = await axios.get(`${API_URL}/${clientId}`, header);
-		console.log("In api response : ", response);
 		return response.data;
 	} catch (error) {
 		throw error;

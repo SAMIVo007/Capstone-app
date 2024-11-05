@@ -1,22 +1,18 @@
 [
 	{
-		"clientId": "cm14ydciv000014gerurjx78k",
-		"id": "cm30fg1ye0003901n95dd46oi",
-		"inquiryDate": "2024-11-02T17:18:20.390Z",
-		"land": {
-			"area": "2345",
-			"boughtPrice": "1",
-			"currentPrice": null,
-			"dimensionOfLand": "187x34",
-			"id": "cm30er8g10001p1cm653sfo3g",
-			"landIdentificationNumber": "abcd1234",
-			"landType": "Commercial",
-			"location": "chandigarh",
-			"ownerId": "cm1982fez0000r0tk5br2wb62",
-			"parcelStatus": null,
-			"web3Id": "15"
-		},
-		"landId": "cm30er8g10001p1cm653sfo3g",
-		"status": "PENDING"
+		"currentOwnerId": "cm1982fez0000r0tk5br2wb62",
+		"landId": "3",
+		"landIdBackend": "cm154szzu000ay0ecnlpragvy",
+		"landIdWeb3": "3",
+		"prevOwnerId": "cm14nh6z50000zus6tkvcyn11",
+		"transferAmount": "1"
+	},
+	{
+		"landId": "3",
+		"landIdWeb3": "3",
+		"landIdBackend": "cm154szzu000ay0ecnlpragvy",
+		"prevOwnerId": "cm14nh6z50000zus6tkvcyn11",
+		"currentOwnerId": "cm1982fez0000r0tk5br2wb62",
+		"transferAmount": "1"
 	}
 ]

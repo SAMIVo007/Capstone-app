@@ -63,6 +63,26 @@ export default function AppLayout() {
 				}}
 			/>
 			<Stack.Screen
+				name="UserLandInterests"
+				options={{
+					orientation: "portrait",
+					headerTitle: "My Interests",
+					headerTitleStyle: { fontSize: 18, fontWeight: "bold" },
+					headerStyle: { backgroundColor: "#dbebffff" },
+					headerLeft: () => (
+						<AndroidButton
+							onPress={() => router.back()}
+							style={null}
+							innerStyle={null}
+							className="rounded-full ml-[-12] mr-1"
+							rippleColor="#86aad4ff"
+						>
+							<Ionicons name="chevron-back" size={24} color="black" />
+						</AndroidButton>
+					),
+				}}
+			/>
+			<Stack.Screen
 				name="Marketplace"
 				options={{
 					headerShown: false,

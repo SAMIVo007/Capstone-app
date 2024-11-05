@@ -7,6 +7,7 @@ import {
 	useWindowDimensions,
 	Image,
 	Pressable,
+	ToastAndroid,
 } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import LandCard from "../../components/LandCard";
@@ -42,12 +43,20 @@ import {
 } from "expo-router";
 import Carousel from "react-native-reanimated-carousel";
 import { useSharedValue } from "react-native-reanimated";
+import { fetchUserEmail } from "../../util/authApi";
+import { createInquiry, getUserInterestedLands } from "../../util/landInquiry";
+import LottieView from "lottie-react-native";
+import LandTransferContract from "../../Metamask/LandTransferContract";
 
 export default function LandInfo() {
 	const { width } = useWindowDimensions();
 	const progressValue = useSharedValue(0);
 	const color = useColorScheme();
 	const colorMode = color == "dark" ? "dark" : "light";
+	const [ownerName, setOwnerName] = useState("");
+	const [email, setEmail] = useState("");
+	const [landInterested, setLandStatus] = useState(null);
+	const [myLand, setMyLand] = useState(false);
 
 	const localSearchParams = useLocalSearchParams();
 
@@ -63,6 +72,8 @@ export default function LandInfo() {
 		id,
 		landIdentificationNumber,
 		imgUri,
+		status,
+		web3Id,
 	} = localSearchParams;
 
 	const priceDecorator = (price) => {
@@ -86,6 +97,54 @@ export default function LandInfo() {
 			uri: "https://www.premierhomesca.com/wp-content/uploads/2020/03/EL3-Model-11-scaled-e1611704624780.jpg",
 		},
 	];
+
+	const { userData } = useAuth();
+
+	const confirmInterest = async () => {
+		const data = {
+			clientId: userData.id,
+			landId: id,
+		};
+		try {
+			const response = await createInquiry(data);
+			console.log("Inquiry response:", response);
+		} catch (error) {
+			console.log("Error:", error);
+		}
+	};
+
+	const formData = {
+		landId: web3Id,
+		landIdWeb3: web3Id,
+		landIdBackend: id,
+		prevOwnerId: ownerId,
+		currentOwnerId: userData.id,
+		transferAmount: boughtPrice,
+	};
+
+	useEffect(() => {
+		const myLandCheck = () => {
+			if (userData.id === ownerId) {
+				setMyLand(true);
+			}
+		};
+
+		const getownerName = async () => {
+			const owner = await fetchUserEmail(ownerId);
+			setOwnerName(owner.data.name);
+			setEmail(owner.data.email);
+		};
+
+		const fetchInterestedLands = async () => {
+			const lands = await getUserInterestedLands(userData.id);
+			const hasMatchingLandId = lands.some((entry) => entry.land.id === id);
+			setLandStatus(hasMatchingLandId);
+		};
+
+		myLandCheck();
+		getownerName();
+		fetchInterestedLands();
+	}, []);
 
 	return (
 		<>
@@ -128,40 +187,37 @@ export default function LandInfo() {
 					<View className="flex-row items-center pt-1 justify-start">
 						<Feather name="map-pin" size={12} color="#606060" />
 						<ThemedText style={{ paddingLeft: 6, color: "#606060" }} type="small">
-							{area}, {location}
+							{location}
 						</ThemedText>
 					</View>
 
 					<View
-						className="flex-wrap rounded-2xl gap-2 p-4 mt-6 bg-gray-100"
+						className="flex-wrap rounded-2xl gap-2 p-4 mt-6 justify-between bg-gray-100"
 						style={{ flexDirection: "row" }}
 					>
 						<View
-							className=" flex-row p-2 px-5 items-center gap-2 border-r border-gray-300 "
-							style={{ flex: 1 }}
+							className=" flex-row p-2 pr-4 items-center gap-2 border-gray-300 "
+							// style={{ flex: 1 }}
 						>
 							<Foundation name="mountains" size={20} color="#606060" />
 							<ThemedText type="small" style={{ color: "#606060" }}>
 								{landType}
 							</ThemedText>
 						</View>
+						<View className="border-l  border-gray-300"></View>
 						<View
-							className=" flex-row p-2 px-5 items-center justify-center gap-2"
-							style={{ flex: 1 }}
+							className=" flex-row p-2 items-center gap-2"
+							// style={{ flex: 1 }}
 						>
 							<MaterialCommunityIcons name="axis-arrow" size={18} color="#606060" />
 							<ThemedText type="small" style={{ color: "#606060" }}>
-								{dimensionOfLand} sqft.
+								{dimensionOfLand} ({area} sqft.)
 							</ThemedText>
 						</View>
 					</View>
 
 					<ThemedText type="defaultSemiBold" className="mt-8">
-						Official Id
-					</ThemedText>
-
-					<ThemedText type="small" style={{ color: "#606060" }} className="pt-2">
-						{landIdentificationNumber}
+						Images
 					</ThemedText>
 
 					<ThemedText type="defaultSemiBold" className="mt-8">
@@ -172,20 +228,25 @@ export default function LandInfo() {
 						<View className="flex-row">
 							<Image
 								source={{
-									uri: "https://ichef.bbci.co.uk/news/480/cpsprodpb/ef0e/live/9723a330-718c-11ef-8331-3bcdbb18c020.jpg.webp",
+									uri: "https://st4.depositphotos.com/9998432/22812/v/450/depositphotos_228123692-stock-illustration-person-gray-photo-placeholder-man.jpg",
 								}}
 								style={{ width: 70, height: 70, borderRadius: 35 }}
 							/>
 
 							<ThemedView className="pl-4 justify-center">
-								<ThemedText type="defaultSemiBold">Owner Name</ThemedText>
-								<ThemedText type="small" style={{ fontSize: 12, color: "#606060" }}>
-									Designation
+								<ThemedText type="defaultSemiBold">{ownerName}</ThemedText>
+								<ThemedText
+									type="link"
+									onPress={() => {
+										console.log("pressed!");
+									}}
+								>
+									{email}
 								</ThemedText>
 							</ThemedView>
 						</View>
 
-						<View className="flex-row gap-3 items-center justify-end">
+						{/* <View className="flex-row gap-3 items-center justify-end">
 							<AndroidButton
 								rippleColor="#006a10ff"
 								className="rounded-full bg-green-600"
@@ -198,11 +259,15 @@ export default function LandInfo() {
 							>
 								<Feather name="mail" size={22} color="white" />
 							</AndroidButton>
-						</View>
+						</View> */}
 					</ThemedView>
 
 					<ThemedText type="defaultSemiBold" className="mt-8">
-						Images
+						Official Land-Id
+					</ThemedText>
+
+					<ThemedText type="small" style={{ color: "#606060" }} className="pt-2">
+						{landIdentificationNumber}
 					</ThemedText>
 				</View>
 			</ParallaxScrollView>
@@ -218,12 +283,65 @@ export default function LandInfo() {
 					<ThemedText type="subtitle">₹{priceDecorator(boughtPrice)}</ThemedText>
 				</View>
 
-				<AndroidButton
-					innerStyle={{ paddingHorizontal: 26 }}
-					className="rounded-full bg-primaryBlue"
-				>
-					<Text className="color-white">Interested</Text>
-				</AndroidButton>
+				{myLand ? null : landInterested === null ? (
+					<View
+						style={{
+							height: 45,
+							overflow: "hidden",
+							justifyContent: "center",
+							alignItems: "center",
+							borderRadius: 50,
+							backgroundColor: "#6b7280",
+						}}
+					>
+						<LottieView
+							source={require("../../assets/lotties/loading.json")}
+							autoPlay
+							loop={true}
+							style={{
+								width: 100,
+								height: 100,
+								transform: [{ translateY: -1 }],
+							}}
+						/>
+					</View>
+				) : landInterested ? (
+					status === "APPROVED" ? (
+						<LandTransferContract formData={formData} />
+					) : (
+						<AndroidButton
+							innerStyle={{
+								paddingHorizontal: 26,
+								flexDirection: "row",
+								gap: 6,
+								alignItems: "center",
+								justifyContent: "center",
+							}}
+							className="rounded-full bg-gray-500"
+							rippleColor="#b0b0b0ff"
+						>
+							<FontAwesome6 name="clock" size={16} color="white" />
+							<Text className="color-white">Pending</Text>
+						</AndroidButton>
+					)
+				) : (
+					<AndroidButton
+						onPress={() => {
+							confirmInterest();
+						}}
+						innerStyle={{
+							paddingHorizontal: 26,
+							flexDirection: "row",
+							gap: 6,
+							alignItems: "center",
+							justifyContent: "center",
+						}}
+						className="rounded-full bg-primaryBlue"
+					>
+						<FontAwesome6 name="hand-sparkles" size={16} color="white" />
+						<Text className="color-white">Interested</Text>
+					</AndroidButton>
+				)}
 			</ThemedView>
 		</>
 	);

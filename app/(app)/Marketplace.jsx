@@ -28,14 +28,6 @@ import { router } from "expo-router";
 
 
 export default function Marketplace() {
-	const [showSheet, setShowSheet] = useState(false);
-	// ref
-	const bottomSheetRef = useRef(null);
-	const handleClosePress = () => bottomSheetRef.current?.close();
-	const handleOpenPress = () => {
-		setShowSheet(true);
-		bottomSheetRef.current?.snapToIndex(0);
-	};
 	const [allLands, setLands] = useState([]);
 
 	const Spacer = ({ height = 16 }) => <MotiView style={{ height }} />;
@@ -44,7 +36,6 @@ export default function Marketplace() {
 
 	useEffect(() => {
 		const getLands = async () => {
-			// setclientId(userData.id);
 			const lands = await getAllLands();
 			setLands(lands);
 			console.log("Market : ", lands);
@@ -189,7 +180,6 @@ export default function Marketplace() {
 					</MotiView>
 				) : (
 					<View style={{ flex: 1, paddingTop: 8 }}>
-
 						<ThemedText type="defaultSemiBold" className="p-7 pb-5 pt-0">
 							Featured
 						</ThemedText>
@@ -202,7 +192,6 @@ export default function Marketplace() {
 								<MarketCard
 									cardSize="small"
 									{...item}
-									onPress={() => handleOpenPress()}
 								/>
 							)}
 							estimatedItemSize={10}
@@ -223,7 +212,6 @@ export default function Marketplace() {
 								<MarketCard
 									cardSize="large"
 									{...item}
-									onPress={() => handleOpenPress()}
 								/>
 							)}
 							estimatedItemSize={10}
@@ -234,12 +222,5 @@ export default function Marketplace() {
 				)}
 			</ParallaxScrollView>
 		</>
-
-		// 	{showSheet && (
-		// 		<LandBuyersSheet
-		// 			closeSheet={() => handleClosePress()}
-		// 			ref={bottomSheetRef}
-		// 		/>
-		// 	)}
 	);
 }
