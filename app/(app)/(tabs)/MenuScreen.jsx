@@ -26,9 +26,10 @@ import Colors from "../../../components/Colors";
 import { AndroidButton } from "../../../components/AndroidButton";
 import { router } from "expo-router";
 import { useAuth } from "../../../util/AuthContext";
+import { ThemedText } from "../../../components/ThemedText";
 
 export default function MenuScreen() {
-	const { logOut } = useAuth(); // Access auth state from context
+	const { logOut, userData } = useAuth(); // Access auth state from context
 
 	return (
 		<ImageBackground
@@ -87,8 +88,10 @@ export default function MenuScreen() {
 							}}
 						/>
 						<View>
-							<Text className=" text-3xl font-bold ml-4">Yuvraj Singh</Text>
-							<Text className=" text-s ml-4">App Developer</Text>
+							<Text className=" text-3xl font-bold ml-4">{userData?.name}</Text>
+							<ThemedText type="link" className=" text-s ml-4">
+								{userData?.email}
+							</ThemedText>
 						</View>
 					</View>
 					{/* </AndroidButton> */}

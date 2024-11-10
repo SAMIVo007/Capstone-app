@@ -39,7 +39,7 @@ export const loginUser = async (userData) => {
 	try {
 		console.log(API_URL);
 		const response = await axios.post(`${API_URL}/login`, userData);
-		console.log("response", response);
+		console.log("login api response:", response.data);
 		return response.data;
 	} catch (error) {
 		console.log(error);

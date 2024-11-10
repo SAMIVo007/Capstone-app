@@ -6,6 +6,7 @@ import {
 	TouchableOpacity,
 	Dimensions,
 	useColorScheme,
+	TextInput,
 } from "react-native";
 import {
 	Ionicons,
@@ -23,30 +24,44 @@ import FadedView from "../../../components/FadeView";
 import { useAppKit } from "@reown/appkit-wagmi-react-native";
 import { router } from "expo-router";
 import { useAuth } from "../../../util/AuthContext";
-import Web3 from "../../../Metamask/WalletConnect";
 
 export default function HomePage() {
+	const { userData } = useAuth();
+
 	const width = Dimensions.get("window").width;
 	const progressValue = useSharedValue(0);
 	const { open } = useAppKit();
 	const colorScheme = useColorScheme() ?? "light";
-	const { userData } = useAuth();
+
+	useEffect(() => {
+		console.log("userData on homepage: ", userData);
+	}, [userData]);
 
 	const items = [
 		{
 			uri: "https://static.theprint.in/wp-content/uploads/2018/08/Modi-Ujjawala.jpg",
 		},
+
 		{
-			uri: "https://wallpapers.com/images/hd/narendra-modi-india-flag-8rwmh1jtmbmtvmh7.jpg",
+			uri: "https://www.ids.ac.uk/wp-content/uploads/2024/05/Blognews-story-1024x600-px-1.jpg",
 		},
 		{
-			uri: "https://thedailyguardian.com/wp-content/uploads/2022/08/Modi-birthday-1.jpeg",
+			uri: "https://www.anticorruptionindia.co.in/assets/images/AboutUs/1.jpg",
 		},
 		{
-			uri: "https://cdn.zeebiz.com/sites/default/files/2021/11/24/166989-pm-modi.jpeg",
+			uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTNQlcFV-Pl4zRhg2x1Qpq9CqXPY4tJ7OQ_w&s",
 		},
 		{
 			uri: "https://akm-img-a-in.tosshub.com/indiatoday/images/breaking_news/202202/modi-pti_1200x768.jpeg?VersionId=ipAZl_bHB8k412gUoI81QCKUIWdfKuEs",
+		},
+		{
+			uri: "https://static.vecteezy.com/system/resources/previews/014/016/404/non_2x/international-anti-corruption-day-celebrated-on-december-9-vector.jpg",
+		},
+		{
+			uri: "https://www.anticorruptionofindia.org.in/wp-content/uploads/2022/11/WhatsApp-Image-2022-11-07-at-09.28.31-1.jpg",
+		},
+		{
+			uri: "https://wallpapers.com/images/hd/narendra-modi-india-flag-8rwmh1jtmbmtvmh7.jpg",
 		},
 	];
 
@@ -59,18 +74,18 @@ export default function HomePage() {
 				}}
 				className="p-4 pt-12 flex-row justify-between items-center "
 			>
-				<View className="flex-row justify-between items-center">
+				<View className="flex-row justify-between items-center pl-1">
 					{/* <Image
 								source={require("../assets/Images/Emblem_of_India.png")}
 								className="w-[12%] h-[100%]"
 								tintColor={"#0062f5"}
 							/> */}
-					<Ionicons
+					{/* <Ionicons
 						name="person-circle-outline"
 						size={26}
 						color={"white"}
 						style={{ marginRight: 6 }}
-					/>
+					/> */}
 
 					<Text className="text-white text-lg text-center font-bold">
 						Anti Corruptō
@@ -78,6 +93,13 @@ export default function HomePage() {
 				</View>
 
 				<View className="flex-row justify-between items-center">
+					<Feather
+						name="bell"
+						size={24}
+						color={"white"}
+						style={{ padding: 2, paddingHorizontal: 8 }}
+					/>
+
 					<TouchableOpacity onPress={() => open()}>
 						<Ionicons
 							name="wallet-outline"
@@ -87,22 +109,17 @@ export default function HomePage() {
 						/>
 					</TouchableOpacity>
 
-					<Feather
-						name="bell"
-						size={24}
-						color={"white"}
-						style={{ padding: 2, paddingHorizontal: 8 }}
-					/>
-					<AntDesign
+					{/* <AntDesign
 						name="search1"
 						size={24}
 						color={"white"}
 						style={{ padding: 2, paddingHorizontal: 8, paddingRight: 0 }}
-					/>
+					/> */}
 				</View>
 			</View>
 
 			<ParallaxScrollView
+				headerContentHeight={320}
 				bgColor={"#1e00c7"}
 				headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
 				headerImage={
@@ -133,6 +150,14 @@ export default function HomePage() {
 								></View>
 								<View className="mx-2"></View>
 							</ScrollView>
+
+							<View
+								className="flex-row items-center gap-2 bg-white px-6 p-4 rounded-full m-4"
+								style={{ elevation: 10 }}
+							>
+								<AntDesign name="search1" size={17} color="gray" />
+								<TextInput placeholder="Find Services..." className="flex-1" />
+							</View>
 						</View>
 					</FadedView>
 				}
@@ -164,15 +189,16 @@ export default function HomePage() {
 								className="self-center"
 							/>
 
-							<Text className=" text-base font-bold p-4 pt-1">Services</Text>
+							<Text className=" text-base font-bold p-4 pt-1">Quick Links</Text>
 
-							<View className="flex-row justify-evenly space-x-4">
+							<View className="flex-row justify-evenly gap-4 px-4">
 								<TouchableOpacity
 									onPress={() => {
 										router.navigate("/(app)/Traffic");
 									}}
+									className="flex-1"
 								>
-									<View className="bg-primaryBlue rounded-lg p-4 ">
+									<View className="bg-primaryBlue rounded-xl p-4 ">
 										<Ionicons
 											name="language"
 											size={24}
@@ -187,8 +213,9 @@ export default function HomePage() {
 									onPress={() => {
 										router.navigate("/(app)/Lands");
 									}}
+									className="flex-1"
 								>
-									<View className="bg-primaryBlue rounded-lg p-4 ">
+									<View className="bg-primaryBlue rounded-xl p-4 ">
 										<Ionicons
 											name="language"
 											size={24}
@@ -197,29 +224,6 @@ export default function HomePage() {
 										/>
 									</View>
 									<Text className="text-center text-sm p-1">Land</Text>
-								</TouchableOpacity>
-								<TouchableOpacity>
-									<View className="bg-primaryBlue rounded-lg p-4 ">
-										<Ionicons
-											name="language"
-											size={24}
-											color="white"
-											style={{ padding: 2, paddingHorizontal: 8 }}
-										/>
-									</View>
-									<Text className="text-center text-sm p-1">Funds</Text>
-								</TouchableOpacity>
-
-								<TouchableOpacity>
-									<View className="bg-primaryBlue rounded-lg p-4 ">
-										<Ionicons
-											name="language"
-											size={24}
-											color="white"
-											style={{ padding: 2, paddingHorizontal: 8 }}
-										/>
-									</View>
-									<Text className="text-center text-sm p-1">Contracts</Text>
 								</TouchableOpacity>
 							</View>
 

@@ -24,16 +24,12 @@ import {
 	MaterialCommunityIcons,
 	MaterialIcons,
 	SimpleLineIcons,
+	Octicons,
 } from "@expo/vector-icons";
 import { AndroidButton } from "../../components/AndroidButton";
-import { FlashList } from "@shopify/flash-list";
-import LandBuyersSheet from "../../components/LandBuyersSheet";
 import { useAuth } from "../../util/AuthContext";
-import { getAllLands } from "../../util/LandApi";
-import MarketCard from "../../components/MarketCard";
 import { MotiView } from "moti";
 import { Skeleton } from "moti/skeleton";
-import { ScrollView } from "react-native-gesture-handler";
 import { ThemedView } from "../../components/ThemedView";
 import { StatusBar } from "expo-status-bar";
 import {
@@ -47,6 +43,9 @@ import { fetchUserEmail } from "../../util/authApi";
 import { createInquiry, getUserInterestedLands } from "../../util/landInquiry";
 import LottieView from "lottie-react-native";
 import LandTransferContract from "../../Metamask/LandTransferContract";
+import ImageView from "react-native-image-viewing";
+import { TouchableOpacity } from "react-native";
+import LandBuyersSheet from "../../components/LandBuyersSheet";
 
 export default function LandInfo() {
 	const { width } = useWindowDimensions();
@@ -57,6 +56,7 @@ export default function LandInfo() {
 	const [email, setEmail] = useState("");
 	const [landInterested, setLandStatus] = useState(null);
 	const [myLand, setMyLand] = useState(false);
+	const [buttonStatus, setButtonStatus] = useState("initial"); // "initial", "loading", "sent"
 
 	const localSearchParams = useLocalSearchParams();
 
@@ -76,6 +76,8 @@ export default function LandInfo() {
 		web3Id,
 	} = localSearchParams;
 
+	console.log("LandId in info:", id);
+
 	const priceDecorator = (price) => {
 		const n = price.length;
 		for (let i = n - 1; i >= 0; i--) {
@@ -86,7 +88,7 @@ export default function LandInfo() {
 		return price;
 	};
 
-	const items = [
+	const images = [
 		{
 			uri: "https://png.pngtree.com/thumb_back/fw800/background/20240614/pngtree-luxury-real-estate-house-property-image_15868457.jpg",
 		},
@@ -100,6 +102,17 @@ export default function LandInfo() {
 
 	const { userData } = useAuth();
 
+	const [visible, setVisible] = useState(false);
+	const [showSheet, setShowSheet] = useState(false);
+
+	// ref
+	const bottomSheetRef = useRef(null);
+	const handleClosePress = () => bottomSheetRef.current?.close();
+	const handleOpenPress = () => {
+		setShowSheet(true);
+		bottomSheetRef.current?.snapToIndex(0);
+	};
+
 	const confirmInterest = async () => {
 		const data = {
 			clientId: userData.id,
@@ -111,6 +124,17 @@ export default function LandInfo() {
 		} catch (error) {
 			console.log("Error:", error);
 		}
+	};
+
+	const handlePress = () => {
+		if (buttonStatus === "initial") {
+			setButtonStatus("loading");
+			// Simulate the delay for the animation, then show "Request Sent"
+			setTimeout(() => {
+				setButtonStatus("sent");
+				confirmInterest(); // Call your function after the animation
+			}, 2000);
+		} else console.log("Dabbi challo, koi fark ni pena!");
 	};
 
 	const formData = {
@@ -146,6 +170,9 @@ export default function LandInfo() {
 		fetchInterestedLands();
 	}, []);
 
+	console.log("landInterested:", landInterested);
+	console.log("status:", status);
+
 	return (
 		<>
 			<StatusBar style="dark" />
@@ -179,16 +206,32 @@ export default function LandInfo() {
 					</ImageBackground>
 				}
 			>
-				<View className="p-7">
-					<ThemedText type="title" style={{ fontSize: 26 }}>
-						{name}
-					</ThemedText>
+				<View className="p-7 pt-6">
+					<View className="flex-row justify-between items-start">
+						<View>
+							<ThemedText type="title" style={{ fontSize: 26 }}>
+								{name}
+							</ThemedText>
 
-					<View className="flex-row items-center pt-1 justify-start">
-						<Feather name="map-pin" size={12} color="#606060" />
-						<ThemedText style={{ paddingLeft: 6, color: "#606060" }} type="small">
-							{location}
-						</ThemedText>
+							<View className="flex-row items-center pt-1 justify-start">
+								<Feather name="map-pin" size={12} color="#606060" />
+								<ThemedText style={{ paddingLeft: 6, color: "#606060" }} type="small">
+									{location}
+								</ThemedText>
+							</View>
+						</View>
+
+						{myLand ? (
+							<AndroidButton
+								onPress={() => {
+									handleOpenPress();
+								}}
+								className="rounded-full"
+								rippleColor="#b0b0b0ff"
+							>
+								<Ionicons name="person-add" size={18} color="black" />
+							</AndroidButton>
+						) : null}
 					</View>
 
 					<View
@@ -219,6 +262,54 @@ export default function LandInfo() {
 					<ThemedText type="defaultSemiBold" className="mt-8">
 						Images
 					</ThemedText>
+
+					<TouchableOpacity
+						activeOpacity={0.8}
+						onPress={() => {
+							setVisible(true);
+						}}
+						className=" justify-center items-center"
+					>
+						<Carousel
+							loop
+							width={width}
+							height={width * 0.58}
+							pagingEnabled={true}
+							snapEnabled={true}
+							autoPlay={true}
+							autoPlayInterval={3000}
+							onProgressChange={(_, absoluteProgress) =>
+								(progressValue.value = absoluteProgress)
+							}
+							mode="parallax"
+							modeConfig={{
+								parallaxScrollingScale: 0.9,
+								parallaxScrollingOffset: 50,
+							}}
+							data={images}
+							scrollAnimationDuration={1000}
+							renderItem={({ item }) => (
+								<View>
+									<Image
+										source={{ uri: item.uri }}
+										style={{
+											width: "100%",
+											height: "100%",
+											borderRadius: 15,
+											padding: 4,
+										}}
+									/>
+								</View>
+							)}
+						/>
+					</TouchableOpacity>
+
+					<ImageView
+						images={images}
+						imageIndex={0}
+						visible={visible}
+						onRequestClose={() => setVisible(false)}
+					/>
 
 					<ThemedText type="defaultSemiBold" className="mt-8">
 						Owner
@@ -262,7 +353,7 @@ export default function LandInfo() {
 						</View> */}
 					</ThemedView>
 
-					<ThemedText type="defaultSemiBold" className="mt-8">
+					<ThemedText type="defaultSemiBold" className="mt-10">
 						Official Land-Id
 					</ThemedText>
 
@@ -307,7 +398,7 @@ export default function LandInfo() {
 					</View>
 				) : landInterested ? (
 					status === "APPROVED" ? (
-						<LandTransferContract formData={formData} />
+							<LandTransferContract formData={formData} />
 					) : (
 						<AndroidButton
 							innerStyle={{
@@ -326,9 +417,7 @@ export default function LandInfo() {
 					)
 				) : (
 					<AndroidButton
-						onPress={() => {
-							confirmInterest();
-						}}
+						onPress={handlePress}
 						innerStyle={{
 							paddingHorizontal: 26,
 							flexDirection: "row",
@@ -338,11 +427,50 @@ export default function LandInfo() {
 						}}
 						className="rounded-full bg-primaryBlue"
 					>
-						<FontAwesome6 name="hand-sparkles" size={16} color="white" />
-						<Text className="color-white">Interested</Text>
+						{buttonStatus === "loading" ? (
+							<View
+								style={{
+									height: 18,
+									width: 90,
+									overflow: "hidden",
+									justifyContent: "center",
+									alignItems: "center",
+									borderRadius: 50,
+								}}
+							>
+								<LottieView
+									source={require("../../assets/lotties/loading.json")}
+									autoPlay
+									loop={true}
+									style={{
+										width: 100,
+										height: 100,
+										transform: [{ translateY: -1 }],
+									}}
+								/>
+							</View>
+						) : buttonStatus === "sent" ? (
+							<>
+								<FontAwesome6 name="check-circle" size={16} color="white" />
+								<Text className="color-white">Request Sent</Text>
+							</>
+						) : (
+							<>
+								<FontAwesome6 name="hand-sparkles" size={16} color="white" />
+								<Text className="color-white">Interested</Text>
+							</>
+						)}
 					</AndroidButton>
 				)}
 			</ThemedView>
+
+			{showSheet && (
+				<LandBuyersSheet
+					closeSheet={() => handleClosePress()}
+					ref={bottomSheetRef}
+					landId={id}
+				/>
+			)}
 		</>
 	);
 }

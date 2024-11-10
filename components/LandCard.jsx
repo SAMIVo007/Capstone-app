@@ -34,7 +34,9 @@ export default function LandCard({
 	id,
 	web3Id,
 	interestsView = false,
+	onpres,
 }) {
+	console.log("landId in Landcard:", id);
 	// const { height, width } = useWindowDimensions();
 	const theme = useColorScheme();
 	const gradient =
@@ -135,7 +137,13 @@ export default function LandCard({
 						</View>
 					) : (
 						<View className="flex-row border-t border-gray-300 mt-2 pt-3 justify-between items-center">
-							<View className="flex-row justify-center items-center ">
+							<TouchableOpacity
+								className="flex-row justify-center items-center "
+								onPress={() => {
+									onpres();
+								}}
+								activeOpacity={0.4}
+							>
 								<Image
 									source={{
 										uri: "https://akm-img-a-in.tosshub.com/aajtak/images/story/202201/sukhbir_singh_badal-sixteen_nine.jpg?size=948:533",
@@ -189,7 +197,7 @@ export default function LandCard({
 										+12
 									</ThemedText>
 								</View>
-							</View>
+							</TouchableOpacity>
 
 							<View className="flex-row gap-3">
 								<TouchableOpacity className="p-2 rounded-full bg-[#eeeeeece]">

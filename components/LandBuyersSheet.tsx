@@ -25,7 +25,8 @@ import { Collapsible } from "./Collapsible";
 import { MotiView, MotiText } from "moti";
 import { Skeleton } from "moti/skeleton";
 import { AndroidButton } from "./AndroidButton";
-import { updateInquiryStatus } from "../util/landInquiry";
+import { getInquiryLandsById, updateInquiryStatus } from "../util/landInquiry";
+import { fetchUserEmail } from "@/util/authApi";
 
 interface Inquiry {
 	name: string;
@@ -39,7 +40,7 @@ interface Inquiry {
 interface Props {
 	closeSheet: () => void;
 	refresh: () => void;
-	inquiries: Inquiry[];
+	landId: string;
 }
 type Ref = BottomSheet;
 
@@ -50,7 +51,7 @@ const LandBuyersSheet = forwardRef<Ref, Props>((props, ref) => {
 	const handleSheetChanges = useCallback((index: number) => {
 		console.log("BottomSheet:", index);
 		if (index === -1) {
-			props.refresh();
+			// setInquiries(null);
 		}
 	}, []);
 
@@ -72,9 +73,7 @@ const LandBuyersSheet = forwardRef<Ref, Props>((props, ref) => {
 
 	const colorMode = colorScheme == "dark" ? "dark" : "light";
 
-	useEffect(() => {
-		console.log("Updated inquiries from props:", props.inquiries);
-	}, [props.inquiries]);
+	const [inquiries, setInquiries] = useState<Inquiry[] | null>(null);
 
 	const handleApproval = async (inquiryId: String) => {
 		try {
@@ -87,6 +86,36 @@ const LandBuyersSheet = forwardRef<Ref, Props>((props, ref) => {
 			console.error("Error approving land:", error);
 		}
 	};
+
+	useEffect(() => {
+		console.log("landId in sheet:", props.landId);
+		console.log("inquiries in sheet:", inquiries);
+	}, [inquiries, props.landId]);
+
+	useEffect(() => {
+		console.log("landId in bottomsheet:", props.landId);
+		const filterClientsByLand = async (landId: String) => {
+			const inquiryData = await getInquiryLandsById(landId);
+			const clients = await Promise.all(
+				inquiryData.map(
+					async (inquiry: { clientId: any; id: any; status: any }) => {
+						const clientData = await fetchUserEmail(inquiry.clientId);
+						return {
+							clientId: inquiry.clientId,
+							inquiryId: inquiry.id,
+							status: inquiry.status,
+							email: clientData?.data?.email ?? "",
+							name: clientData?.data?.name ?? "",
+						};
+					}
+				)
+			);
+			setInquiries(clients);
+			return clients;
+		};
+
+		filterClientsByLand(props.landId);
+	}, []);
 
 	return (
 		<BottomSheet
@@ -111,12 +140,12 @@ const LandBuyersSheet = forwardRef<Ref, Props>((props, ref) => {
 		>
 			{/* Skeleton view with fade-out animation */}
 			<MotiView
-				animate={{ opacity: props.inquiries ? 0 : 1 }}
+				animate={{ opacity: inquiries ? 0 : 1 }}
 				transition={{ type: "timing", duration: 500 }}
 				style={{
 					position: "absolute",
 					width: "100%",
-					zIndex: props.inquiries ? 0 : 1,
+					zIndex: inquiries ? 0 : 1,
 				}}
 			>
 				<BottomSheetScrollView
@@ -147,17 +176,15 @@ const LandBuyersSheet = forwardRef<Ref, Props>((props, ref) => {
 
 			{/* Data view with fade-in animation */}
 			<MotiView
-				animate={{ opacity: props.inquiries ? 1 : 0 }}
+				animate={{ opacity: inquiries ? 1 : 0 }}
 				transition={{ type: "timing", duration: 800 }}
-				style={{ flex: 1, zIndex: props.inquiries ? 1 : 0 }}
+				style={{ flex: 1, zIndex: inquiries ? 1 : 0 }}
 			>
-				{props.inquiries?.length > 0 ? (
+				{inquiries && inquiries?.length > 0 ? (
 					<>
 						<ThemedText type="subtitle" className="p-8 py-4 ">
-							{props.inquiries.length}{" "}
-							{props.inquiries.length !== 1
-								? "people interested"
-								: "person interested"}
+							{inquiries.length}{" "}
+							{inquiries.length !== 1 ? "people interested" : "person interested"}
 						</ThemedText>
 
 						<BottomSheetScrollView
@@ -168,7 +195,7 @@ const LandBuyersSheet = forwardRef<Ref, Props>((props, ref) => {
 								paddingTop: 10,
 							}}
 						>
-							{props.inquiries.map((item, index) => (
+							{inquiries.map((item, index) => (
 								<Collapsible
 									titlerender={() => (
 										<ThemedView className="flex-row">
@@ -209,7 +236,6 @@ const LandBuyersSheet = forwardRef<Ref, Props>((props, ref) => {
 											<Text className="text-center text-white">Approve</Text>
 										</AndroidButton>
 									) : null}
-									
 								</Collapsible>
 							))}
 							<View style={{ padding: 50 }}></View>

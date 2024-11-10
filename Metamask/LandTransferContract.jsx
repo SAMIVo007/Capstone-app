@@ -26,8 +26,9 @@ export default function LandTransferContract({ formData }) {
 	const { sendTransaction, isPending, isSuccess, data } = useSendTransaction();
 
 	const updateinDB = async () => {
+		console.log("Database updation initiated...");
 		const response = await createTransferLand(formData);
-		console.log("Land-Transfer response : ", response);
+		console.log("Land-Transfer response : ", response.data);
 		if (response.status == 200) {
 			ToastAndroid.showWithGravity(
 				"Payment Successfull ✅, Land Transfer Completed.",
@@ -77,7 +78,10 @@ export default function LandTransferContract({ formData }) {
 				alignItems: "center",
 				justifyContent: "center",
 			}}
-			className="rounded-full bg-[#2eaf95]"
+			style={{
+				borderRadius: 999,
+				backgroundColor: "#2eaf95",
+			}}
 			rippleColor="#00deae"
 		>
 			<FontAwesome6 name="ethereum" size={16} color="white" />

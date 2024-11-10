@@ -1,4 +1,4 @@
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput, useColorScheme } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import LandCard from "../../components/LandCard";
 import { ThemedText } from "@/components/ThemedText";
@@ -10,11 +10,13 @@ import { getUserLands } from "../../util/LandApi";
 import { useAuth } from "../../util/AuthContext";
 import { getInquiryLandsById } from "../../util/landInquiry";
 import { fetchUserEmail } from "../../util/authApi";
+import { MotiView, MotiText } from "moti";
+import { Skeleton } from "moti/skeleton";
 
 export default function Lands() {
 	const [showSheet, setShowSheet] = useState(false);
-	const [myLands, setMyLands] = useState([]);
-	const [inquiries, setInquiries] = useState(null);
+	const [myLands, setMyLands] = useState(null);
+	const [propLandId, setPropLandId] = useState("");
 	// ref
 	const bottomSheetRef = useRef(null);
 	const handleClosePress = () => bottomSheetRef.current?.close();
@@ -23,30 +25,17 @@ export default function Lands() {
 		bottomSheetRef.current?.snapToIndex(0);
 	};
 
+	const colorScheme = useColorScheme();
+	const colorMode = colorScheme == "dark" ? "dark" : "light";
+
 	const { userData } = useAuth();
 
-	const filterClientsByLand = async (landId) => {
-		const inquiryData = await getInquiryLandsById(landId);
-		const clients = await Promise.all(
-			inquiryData.map(async (inquiry) => {
-				const clientData = await fetchUserEmail(inquiry.clientId);
-				return {
-					clientId: inquiry.clientId,
-					inquiryId: inquiry.id,
-					status: inquiry.status,
-					email: clientData.data.email,
-					name: clientData.data.name,
-				};
-			})
-		);
-		setInquiries(clients);
-	};
+	console.log("My Lands : ", myLands);
 
 	useEffect(() => {
 		const getMyLands = async () => {
 			const lands = await getUserLands(userData);
 			setMyLands(lands);
-			// console.log("My Lands : ", lands);
 		};
 		getMyLands();
 	}, []);
@@ -69,31 +58,47 @@ export default function Lands() {
 				</AndroidButton>
 			</View>
 
-			<FlashList
-				data={myLands}
-				showsVerticalScrollIndicator={false}
-				renderItem={({ item }) => (
-					<LandCard
-						{...item}
-						onpress={() => {
-							filterClientsByLand(item.id);
-							handleOpenPress();
-						}}
-					/>
-				)}
-				estimatedItemSize={10}
-				keyExtractor={(item, index) => index}
-				ListFooterComponent={<View className="h-20" />}
-			/>
+			{myLands === null ? (
+				<MotiView
+					style={{
+						width: "100%",
+						paddingHorizontal: 16,
+					}}
+				>
+					<MotiText className="absolute z-10 top-24 left-48 text-lg">
+						Loading...
+					</MotiText>
+					<Skeleton colorMode={colorMode} width={"100%"} height={200} />
+				</MotiView>
+			) : myLands.length === 0 ? (
+				<View className="flex-1 justify-center items-center">
+					<ThemedText className="text-center text-lg">No Lands found...</ThemedText>
+				</View>
+			) : (
+				<FlashList
+					data={myLands}
+					showsVerticalScrollIndicator={false}
+					renderItem={({ item }) => (
+						<LandCard
+							{...item}
+							onpres={() => {
+								console.log("Land Card Press");
+								setPropLandId(item.id);
+								handleOpenPress();
+							}}
+						/>
+					)}
+					estimatedItemSize={10}
+					keyExtractor={(item, index) => index}
+					ListFooterComponent={<View className="h-20" />}
+				/>
+			)}
 
 			{showSheet && (
 				<LandBuyersSheet
 					closeSheet={() => handleClosePress()}
 					ref={bottomSheetRef}
-					inquiries={inquiries}
-					refresh={() => {
-						setInquiries(null);
-					}}
+					landId={propLandId}
 				/>
 			)}
 		</View>

@@ -3,10 +3,9 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { AndroidButton } from "@/components/AndroidButton";
 import { useAuth } from "../../util/AuthContext";
 import LottieSplashScreen from "@/components/LottieSplashScreen";
-import Web3 from "@/Metamask/WalletConnect";
 
 export default function AppLayout() {
-	const { authState } = useAuth(); // Access auth state from context
+	const { authState, userData } = useAuth(); // Access auth state from context
 	console.log("Auth state (app): ", authState);
 
 	if (authState === null) {
@@ -16,7 +15,7 @@ export default function AppLayout() {
 
 	if (!authState) {
 		console.log("Redirecting to login...");
-		return <Redirect href={"/Login"} />;
+		return <Redirect href={"/LoginSplash"} />;
 	}
 
 	return (
@@ -28,14 +27,14 @@ export default function AppLayout() {
 					orientation: "portrait",
 					headerTitle: "My Vehicles",
 					headerTitleStyle: { fontSize: 18, fontWeight: "bold" },
-					headerStyle: { backgroundColor: "#dbebffff" },
+					// headerStyle: { backgroundColor: "#f5f5f5ff" },
 					headerLeft: () => (
 						<AndroidButton
 							onPress={() => router.back()}
 							style={null}
 							innerStyle={null}
 							className="rounded-full ml-[-12] mr-1"
-							rippleColor="#86aad4ff"
+							rippleColor="#747474ff"
 						>
 							<Ionicons name="chevron-back" size={24} color="black" />
 						</AndroidButton>
